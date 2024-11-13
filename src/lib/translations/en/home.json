@@ -1,0 +1,15 @@
+{
+	"search": {
+		"placeholder": "Type a word",
+		"button": "Search"
+	},
+	"slogan": "All the words at your fingertips",
+	"error": {
+		"notFound": "No definition found for \"{word}\"",
+		"api": "An error occurred while fetching the definition",
+		"invalid": "Invalid word"
+	},
+	"antonyms": "Antonyms",
+	"synonyms": "Synonyms",
+	"sources": "Sources"
+}

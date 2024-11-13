@@ -1,0 +1,13 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+	@font-face {
+		font-family: 'SourGrummy';
+		font-style: 'light';
+		font-weight: 300;
+		font-display: swap;
+		src: url('/fonts/SourGummy-ExtraLightItalic.ttf') format('truetype');
+	}
+}
