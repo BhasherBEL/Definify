@@ -4,7 +4,7 @@ import type { Load } from '@sveltejs/kit';
 export const load: Load = async ({ url, data }) => {
 	const { pathname } = url;
 
-	const initLocale = navigator.language || 'en';
+	const initLocale = 'en';
 
 	await loadTranslations(initLocale, pathname);
 
