@@ -3,7 +3,7 @@ import { db } from '.';
 import * as table from './schema';
 
 export const getUserByUsername = async (username: string) => {
-	const results = await db.select().from(table.user).where(eq(table.user.username, username));
+	const results = await db.select().from(table.users).where(eq(table.users.username, username));
 
 	return results.at(0);
 };
@@ -14,5 +14,5 @@ export const createUser = async (
 	email: string,
 	passwordHash: string
 ) => {
-	await db.insert(table.user).values({ id, username, email, passwordHash });
+	await db.insert(table.users).values({ id, username, email, passwordHash });
 };

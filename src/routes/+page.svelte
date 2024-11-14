@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { t } from '$lib/translations';
 	import { enhance } from '$app/forms';
+	import toasts from '$lib/utils/toasts.js';
+	import { get } from 'svelte/store';
 
 	let { form } = $props();
+
+	let wordIsSaved = $state(form?.saved || false);
 
 	let refs: Record<string, HTMLAudioElement | null> = {};
 
@@ -17,6 +21,36 @@
 			audioElement.play();
 		} else {
 			audioElement.pause();
+		}
+	}
+
+	async function addToWordlist(word: string) {
+		const response = await fetch('/api/words', {
+			method: 'POST',
+			body: JSON.stringify({ word }),
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
+
+		if (response.status === 201) {
+			toasts.success(get(t)('home.saved'));
+			wordIsSaved = true;
+		} else {
+			toasts.alert(get(t)('home.error.save'), response.statusText);
+		}
+	}
+
+	async function removeFromWordlist(word: string) {
+		const response = await fetch(`/api/words/${word}`, {
+			method: 'DELETE'
+		});
+
+		if (response.status === 204) {
+			toasts.success(get(t)('home.removed'));
+			wordIsSaved = false;
+		} else {
+			toasts.alert(get(t)('home.error.remove'), response.statusText);
 		}
 	}
 </script>
@@ -53,7 +87,7 @@
 				type="search"
 				id="search"
 				name="search"
-				value={form?.word}
+				value={form?.word || ''}
 				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-center text-4xl text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
 				placeholder={$t('home.search.placeholder')}
 				autocomplete="off"
@@ -68,7 +102,7 @@
 		</div>
 	</form>
 
-	<div class="mx-auto my-16 max-w-5xl">
+	<div class="mx-auto my-12 max-w-5xl">
 		{#if form?.notFound && form?.word}
 			<div class="rounded border border-red-600 bg-red-50 p-2 text-center text-red-900">
 				{$t('home.error.notFound', { word: form.word })}
@@ -85,18 +119,50 @@
 			>
 				{$t('home.error.invalid')}
 			</div>
+		{:else if form?.unauthorized}
+			<div
+				class="mx-auto max-w-5xl rounded border border-red-600 bg-red-50 p-2 text-center text-red-900"
+			>
+				{$t('home.error.unauthorized')}
+			</div>
 		{:else if form?.definition}
-			{#each form?.definition as def (def.word)}
+			{#each form?.definition as def}
 				<div class="border-b-primary-600 border-b-4">
-					<div class="pb-4 font-serif text-6xl font-bold">
-						{def.word}
+					<div class="flex flex-row justify-between py-4">
+						<div class="font-serif text-6xl font-bold">
+							{def.word}
+						</div>
+						<div class="flex items-center text-gray-600">
+							<button
+								aria-label="save"
+								onclick={() => {
+									wordIsSaved ? removeFromWordlist(def?.word) : addToWordlist(def.word);
+								}}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="size-10 hover:cursor-pointer"
+									class:fill-black={wordIsSaved}
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
+									/>
+								</svg>
+							</button>
+						</div>
 					</div>
 					<div class="flex gap-4 space-y-4 space-y-reverse text-xl">
-						{#each def.phonetics as phonetic (phonetic.sourceUrl)}
+						{#each def.phonetics as phonetic}
 							{#if phonetic.text}
 								<span>{phonetic.text}</span>
 							{/if}
-							{#if phonetic.audio}
+							{#if phonetic.audio && phonetic.sourceUrl}
 								<audio bind:this={refs[phonetic.sourceUrl]} src={phonetic.audio}></audio>
 								<button onclick={() => togglePlay(refs[phonetic.sourceUrl]!)} aria-label="Play">
 									<svg
@@ -118,7 +184,7 @@
 						{/each}
 					</div>
 				</div>
-				{#each def.meanings as meaning (meaning)}
+				{#each def.meanings as meaning}
 					<div class="border-b-secondary-200 text-primary-900 my-4 border-b-2 text-xl">
 						<span class="font-bold">{def.word}</span>
 						•
@@ -130,7 +196,7 @@
 								<div class="text-lg">
 									{$t('home.antonyms')}:
 									<span class="italic">
-										{#each meaning.antonyms as antonym (antonym)}
+										{#each meaning.antonyms as antonym}
 											<form class="inline" action="?/search" method="POST" use:enhance>
 												<input type="search" hidden name="search" value={antonym} />
 												<button>{antonym}</button>
@@ -145,7 +211,7 @@
 								<div class="text-lg">
 									{$t('home.synonyms')}:
 									<span class="italic">
-										{#each meaning.synonyms as synonym (synonym)}
+										{#each meaning.synonyms as synonym}
 											<form class="inline" action="?/search" method="POST" use:enhance>
 												<input type="search" hidden name="search" value={synonym} />
 												<button>{synonym}</button>
@@ -158,7 +224,7 @@
 							{/if}
 						</div>
 					{/if}
-					{#each meaning.definitions as mdef (mdef.definition)}
+					{#each meaning.definitions as mdef}
 						<div class="mb-4">
 							<div class="mb-1 text-lg">
 								{mdef.definition}
@@ -195,7 +261,7 @@
 							{$t('home.sources')}
 						</div>
 						<ul class="list-inside list-disc">
-							{#each def.sourceUrls as sourceUrl (sourceUrl)}
+							{#each def.sourceUrls as sourceUrl}
 								<li>
 									<a
 										href={sourceUrl}

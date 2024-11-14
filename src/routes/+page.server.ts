@@ -1,28 +1,43 @@
-import { searchDictionary } from '$lib/dictionnary';
 import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
+import { db } from '$lib/server/db';
+import { and, eq } from 'drizzle-orm';
+import * as tables from '$lib/server/db/schema';
+import { getOrInsertWord } from '$lib/server/db/words';
 
 export const actions: Actions = {
-	search: async ({ request }) => {
+	search: async ({ locals, request }) => {
 		const formData = await request.formData();
 		const word = formData.get('search');
 		if (!word) {
 			return fail(400, { invalid: true });
 		}
 
-		const apiResponse = await searchDictionary(word as string);
+		const wordApi = await getOrInsertWord(word?.toString());
 
-		if (!apiResponse) {
-			return fail(404, { apiError: true });
-		}
-
-		if (apiResponse.title === 'No Definitions Found') {
+		if (!wordApi) {
 			return fail(404, { notFound: true, word });
 		}
 
+		if (!locals.user) {
+			return {
+				definition: wordApi.definition,
+				word,
+				saved: false
+			};
+		}
+
+		const isSaved = await db.query.usersWords.findFirst({
+			where: and(
+				eq(tables.usersWords.userId, locals.user.id),
+				eq(tables.usersWords.wordId, wordApi.id)
+			)
+		});
+
 		return {
-			definition: apiResponse,
-			word
+			word,
+			definition: wordApi.definition,
+			saved: !!isSaved
 		};
 	}
 };

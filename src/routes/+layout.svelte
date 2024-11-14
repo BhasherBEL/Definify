@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { SvelteToast } from '@zerodevx/svelte-toast';
+
 	import '../app.css';
 	import type { LayoutData } from './$types';
 	import Header from './Header.svelte';
@@ -14,3 +16,5 @@
 <Header {data} />
 
 {@render children()}
+
+<SvelteToast />
