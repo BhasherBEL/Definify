@@ -1,6 +1,7 @@
 {
 	"menu": {
-		"home": "Home"
+		"home": "Home",
+		"words": "My saved words"
 	},
 	"login": "Log in",
 	"register": "Register",

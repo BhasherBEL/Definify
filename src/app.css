@@ -4,10 +4,17 @@
 
 @layer base {
 	@font-face {
-		font-family: 'SourGrummy';
-		font-style: 'light';
-		font-weight: 300;
+		font-family: 'OleoScript';
+		font-style: 'normal';
+		font-weight: 400;
 		font-display: swap;
-		src: url('/fonts/SourGummy-ExtraLightItalic.ttf') format('truetype');
+		src: url('/fonts/OleoScript-Regular.ttf') format('truetype');
+	}
+	@font-face {
+		font-family: 'OleoScript';
+		font-style: 'bold';
+		font-weight: 700;
+		font-display: swap;
+		src: url('/fonts/OleoScript-Bold.ttf') format('truetype');
 	}
 }

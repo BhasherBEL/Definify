@@ -31,6 +31,11 @@ const config: Config = {
 			loader: async () => (await import('./en/header.json')).default
 		},
 		{
+			key: 'footer',
+			locale: 'en',
+			loader: async () => (await import('./en/footer.json')).default
+		},
+		{
 			key: 'home',
 			locale: 'en',
 			routes: ['/'],

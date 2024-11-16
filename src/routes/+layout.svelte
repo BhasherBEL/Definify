@@ -5,6 +5,7 @@
 	import type { LayoutData } from './$types';
 	import Header from './Header.svelte';
 	import { t } from '$lib/translations';
+	import Footer from './Footer.svelte';
 
 	let { data, children }: { data: LayoutData; children: any } = $props();
 </script>
@@ -13,8 +14,14 @@
 	<title>{$t('common.name')}</title>
 </svelte:head>
 
-<Header {data} />
+<div class="flex h-screen flex-col overflow-hidden">
+	<Header {data} />
 
-{@render children()}
+	<div class="flex-grow overflow-y-scroll">
+		{@render children()}
+	</div>
+
+	<Footer />
+</div>
 
 <SvelteToast />

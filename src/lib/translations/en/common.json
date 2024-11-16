@@ -2,5 +2,17 @@
 	"name": "Definify",
 	"error": {
 		"unknown": "An unknown error occurred"
+	},
+	"button": {
+		"cancel": "Cancel"
+	},
+	"loginModal": {
+		"title": "Login to your account",
+		"subtitle": "You must be logged in to perform this action.",
+		"login": "Click here to login",
+		"register": "Don't have an account? Register!"
+	},
+	"words": {
+		"definitions": "Definitions"
 	}
 }
