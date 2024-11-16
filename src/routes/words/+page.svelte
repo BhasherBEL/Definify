@@ -50,7 +50,13 @@
 					{$t('common.words.definitions')}
 				</span>
 				{#if word.audio}
-					<button aria-label="audio" onclick={() => togglePlay(refs[word.audio])}>
+					<button
+						aria-label="audio"
+						onclick={(e) => {
+							e.preventDefault();
+							togglePlay(refs[word.audio]);
+						}}
+					>
 						<audio bind:this={refs[word.audio]} src={word.audio}></audio>
 						<svg class="size-5" viewBox="0 0 25 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path
