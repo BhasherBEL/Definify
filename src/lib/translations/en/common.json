@@ -1,7 +1,8 @@
 {
 	"name": "Definify",
 	"error": {
-		"unknown": "An unknown error occurred"
+		"unknown": "An unknown error occurred",
+		"unauthorized": "You must be logged in to access this feature"
 	},
 	"button": {
 		"cancel": "Cancel"
@@ -13,6 +14,13 @@
 		"register": "Don't have an account? Register!"
 	},
 	"words": {
-		"definitions": "Definitions"
+		"antonyms": "Antonyms",
+		"synonyms": "Synonyms",
+		"sources": "Sources",
+		"saved": "Word saved",
+		"removed": "Word removed"
+	},
+	"word": {
+		"definitions": "{n, plural, =1 {Definition} other {Definitions}}"
 	}
 }

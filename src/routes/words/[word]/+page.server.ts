@@ -6,13 +6,11 @@ import { db } from '$lib/server/db';
 import { getOrInsertWord } from '$lib/server/db/words';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
-	if (!locals.user) {
-		return redirect(302, '/login');
-	}
-
 	const word = params.word;
 
-	const wordApi = await getOrInsertWord(word?.toString());
+	if (!word) return redirect(302, '/');
+
+	const wordApi = await getOrInsertWord(word.toString());
 
 	if (!wordApi) {
 		return error(404, 'Word not found');

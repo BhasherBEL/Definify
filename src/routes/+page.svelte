@@ -79,7 +79,7 @@
 			<div
 				class="mx-auto max-w-5xl rounded border border-red-600 bg-red-50 p-2 text-center text-red-900"
 			>
-				{$t('home.error.unauthorized')}
+				{$t('common.error.unauthorized')}
 			</div>
 		{:else if form?.definition}
 			<Word

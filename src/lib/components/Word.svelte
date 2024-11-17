@@ -30,10 +30,10 @@
 		});
 
 		if (response.status === 201) {
-			toasts.success(get(t)('home.saved'));
+			toasts.success(get(t)('common.words.saved'));
 			isSaved = true;
 		} else {
-			toasts.alert(get(t)('home.error.save'), response.statusText);
+			toasts.alert(get(t)('common.words.error.save'), response.statusText);
 		}
 	}
 
@@ -48,10 +48,10 @@
 		});
 
 		if (response.status === 204) {
-			toasts.success(get(t)('home.removed'));
+			toasts.success(get(t)('common.words.removed'));
 			isSaved = false;
 		} else {
-			toasts.alert(get(t)('home.error.remove'), response.statusText);
+			toasts.alert(get(t)('common.words.error.remove'), response.statusText);
 		}
 	}
 
@@ -138,7 +138,7 @@
 			<div class="mb-4 w-fit rounded-lg border p-2 text-gray-700">
 				{#if meaning.antonyms && meaning.antonyms.length > 0}
 					<div class="text-lg">
-						{$t('home.antonyms')}:
+						{$t('common.words.antonyms')}:
 						<span class="italic">
 							{#each meaning.antonyms as antonym}
 								<form class="inline" action="?/search" method="POST" use:enhance>
@@ -153,7 +153,7 @@
 				{/if}
 				{#if meaning.synonyms && meaning.synonyms.length > 0}
 					<div class="text-lg">
-						{$t('home.synonyms')}:
+						{$t('common.words.synonyms')}:
 						<span class="italic">
 							{#each meaning.synonyms as synonym}
 								<form class="inline" action="?/search" method="POST" use:enhance>
@@ -181,7 +181,7 @@
 					{/if}
 					{#if mdef.synonyms && mdef.synonyms.length > 0}
 						<div>
-							{$t('home.synonyms')}:
+							{$t('common.words.synonyms')}:
 							<span class="italic">
 								{mdef.synonyms.join(', ')}
 							</span>
@@ -189,7 +189,7 @@
 					{/if}
 					{#if mdef.antonyms && mdef.antonyms.length > 0}
 						<div>
-							{$t('home.antonyms')}:
+							{$t('common.words.antonyms')}:
 							<span class="italic">
 								{mdef.antonyms.join(', ')}
 							</span>
@@ -202,7 +202,7 @@
 	{#if def.sourceUrls && def.sourceUrls.length > 0}
 		<div class="border-t-2 border-t-primary-200">
 			<div class="my-4 text-xl font-bold text-primary-900">
-				{$t('home.sources')}
+				{$t('common.words.sources')}
 			</div>
 			<ul class="list-inside list-disc">
 				{#each def.sourceUrls as sourceUrl}

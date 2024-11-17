@@ -51,7 +51,7 @@
 					<div class="flex items-center justify-end gap-5">
 						<span class="text-sm lowercase italic text-gray-500">
 							{word.definitions.length}
-							{$t('common.words.definitions')}
+							{$t('common.word.definitions', { n: word.definitions.length })}
 						</span>
 						{#if word.audio}
 							<button

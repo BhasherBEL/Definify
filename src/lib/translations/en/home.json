@@ -3,16 +3,10 @@
 		"placeholder": "Type a word",
 		"button": "Search"
 	},
-	"slogan": "All the words at your fingertips",
+	"slogan": "All the words at your fingertips.",
 	"error": {
 		"notFound": "No definition found for \"{word}\"",
 		"api": "An error occurred while fetching the definition",
-		"invalid": "Invalid word",
-		"unauthorized": "You must be logged in to access this feature"
-	},
-	"antonyms": "Antonyms",
-	"synonyms": "Synonyms",
-	"sources": "Sources",
-	"saved": "Word saved",
-	"reoved": "Word removed"
+		"invalid": "Invalid word"
+	}
 }
