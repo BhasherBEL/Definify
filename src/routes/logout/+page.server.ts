@@ -1,6 +1,7 @@
 import * as auth from '$lib/server/auth';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
+import { safeRedirect } from '$lib/utils/security';
 
 export const actions: Actions = {
 	default: async ({ locals, cookies, url }) => {
@@ -10,7 +11,7 @@ export const actions: Actions = {
 		await auth.invalidateSession(locals.session.id);
 		auth.deleteSessionTokenCookie(cookies);
 
-		const redirectUrl = url.searchParams.get('redirect') || '/';
+		const redirectUrl = safeRedirect(url.searchParams.get('redirect'), url.origin);
 		return redirect(302, redirectUrl);
 	}
 };

@@ -3,10 +3,11 @@ import type { Actions, PageServerLoad } from './$types';
 import * as auth from '$lib/server/auth';
 import { verify } from '@node-rs/argon2';
 import { getUserByUsername } from '$lib/server/db/users';
+import { safeRedirect } from '$lib/utils/security';
 
 export const load: PageServerLoad = async ({ locals, url }) => {
 	if (locals.user) {
-		const redirectUrl = url.searchParams.get('redirect') || '/';
+		let redirectUrl = safeRedirect(url.searchParams.get('redirect'), url.origin);
 		return redirect(302, redirectUrl);
 	}
 	return {};
@@ -44,7 +45,7 @@ export const actions: Actions = {
 		const session = await auth.createSession(sessionToken, existingUser.id);
 		auth.setSessionTokenCookie(cookies, sessionToken, session.expiresAt);
 
-		const redirectUrl = url.searchParams.get('redirect') || '/';
+		const redirectUrl = safeRedirect(url.searchParams.get('redirect'), url.origin);
 		return redirect(302, redirectUrl);
 	}
 };
