@@ -16,3 +16,11 @@ export const createUser = async (
 ) => {
 	await db.insert(table.users).values({ id, username, email, passwordHash });
 };
+
+export const checkUsername = async (username: string) => {
+	return !(await db.query.users.findFirst({ where: eq(table.users.username, username) }));
+};
+
+export const checkEmail = async (email: string) => {
+	return !(await db.query.users.findFirst({ where: eq(table.users.email, email) }));
+};

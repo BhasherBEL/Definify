@@ -21,6 +21,7 @@
 		"removed": "Word removed"
 	},
 	"word": {
-		"definitions": "{n, plural, =1 {Definition} other {Definitions}}"
+		"definitions": "{n, plural, =1 {Definition} other {Definitions}}",
+		"or": "or"
 	}
 }

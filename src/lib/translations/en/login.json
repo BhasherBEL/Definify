@@ -5,6 +5,7 @@
 	"forgotPassword": "Forgot password?",
 	"button": "Sign in",
 	"remember": "Remember me",
+	"passkey": "Login in with a passkey",
 	"register": {
 		"pre": "Don't have an account yet?",
 		"link": "Register now!"
@@ -12,8 +13,8 @@
 	"error": {
 		"incorrect": "Wrong username or password",
 		"invalid": {
-			"password": "Password must be at least 8 characters",
-			"username": "Username must be between 3 and 31 characters and can only contain letters, numbers, and underscores"
+			"password": "Invalid password",
+			"username": "Invalid username"
 		}
 	}
 }

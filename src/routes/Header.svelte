@@ -54,9 +54,14 @@
 									class="absolute left-full z-10 float-end w-44 -translate-x-full divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
 								>
 									<ul
-										class="py-2 text-sm text-gray-700 dark:text-gray-400"
+										class="text-sm text-gray-700 dark:text-gray-400"
 										aria-labelledby="dropdownLargeButton"
 									>
+										<li>
+											<span class="block border border-b-gray-100 px-4 py-2 font-bold capitalize">
+												{user.username}
+											</span>
+										</li>
 										<li>
 											<span
 												class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -64,8 +69,15 @@
 												Settings
 											</span>
 										</li>
+										<li>
+											<span
+												class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+											>
+												Language
+											</span>
+										</li>
 									</ul>
-									<div class="py-1">
+									<div>
 										<form method="POST" action="/logout">
 											<button
 												class="block w-full px-4 py-2 text-left text-sm text-primary-800 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
