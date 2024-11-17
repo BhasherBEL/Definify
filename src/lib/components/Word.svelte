@@ -20,6 +20,9 @@
 			return;
 		}
 
+		let previousIsSaved = isSaved;
+		isSaved = true;
+
 		const response = await fetch('/api/words', {
 			method: 'POST',
 			body: JSON.stringify({ word }),
@@ -28,11 +31,9 @@
 			}
 		});
 
-		if (response.status === 201) {
-			toasts.success(get(t)('common.words.saved'));
-			isSaved = true;
-		} else {
+		if (response.status !== 201) {
 			toasts.alert(get(t)('common.words.error.save'), response.statusText);
+			isSaved = previousIsSaved;
 		}
 	}
 
@@ -42,15 +43,16 @@
 			return;
 		}
 
+		let previousIsSaved = isSaved;
+		isSaved = false;
+
 		const response = await fetch(`/api/words/${word}`, {
 			method: 'DELETE'
 		});
 
-		if (response.status === 204) {
-			toasts.success(get(t)('common.words.removed'));
-			isSaved = false;
-		} else {
+		if (response.status !== 204) {
 			toasts.alert(get(t)('common.words.error.remove'), response.statusText);
+			isSaved = previousIsSaved;
 		}
 	}
 

@@ -18,3 +18,17 @@
 		src: url('/fonts/OleoScript-Bold.ttf') format('truetype');
 	}
 }
+
+.loading-bars {
+	/* @apply pointer-events-none inline-block aspect-square w-6; */
+	height: 1.5rem;
+	width: 1.5rem;
+	aspect-ratio: 1/1;
+	pointer-events: none;
+	display: inline-block;
+	background-color: currentColor;
+	mask-size: 100%;
+	mask-repeat: no-repeat;
+	mask-position: center;
+	mask-image: url("data:image/svg+xml,%0A%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cstyle%3E.spinner_hzlK%7Banimation:spinner_vc4H .8s linear infinite;animation-delay:-.8s%7D.spinner_koGT%7Banimation-delay:-.65s%7D.spinner_YF1u%7Banimation-delay:-.5s%7D@keyframes spinner_vc4H%7B0%25%7By:1px;height:22px%7D93.75%25%7By:5px;height:14px;opacity:.2%7D%7D%3C/style%3E%3Crect class='spinner_hzlK' x='1' y='1' width='6' height='22'/%3E%3Crect class='spinner_hzlK spinner_koGT' x='9' y='1' width='6' height='22'/%3E%3Crect class='spinner_hzlK spinner_YF1u' x='17' y='1' width='6' height='22'/%3E%3C/svg%3E");
+}

@@ -8,13 +8,26 @@
 
 	let wordIsSaved = $state(form?.saved || false);
 
+	let searching = $state(false);
+
 	$effect(() => (wordIsSaved = form?.saved));
 </script>
 
 <div class="mx-4 mt-24 text-center font-serif text-4xl italic lg:text-5xl">{$t('home.slogan')}</div>
 
 <div class="mx-4">
-	<form class="mx-auto mt-16 max-w-5xl" action="?/search" method="POST" use:enhance>
+	<form
+		class="mx-auto mt-16 max-w-5xl"
+		action="?/search"
+		method="POST"
+		use:enhance={() => {
+			searching = true;
+			return async ({ update }) => {
+				await update();
+				searching = false;
+			};
+		}}
+	>
 		<label
 			for="default-search"
 			class="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -80,6 +93,10 @@
 				class="mx-auto max-w-5xl rounded border border-red-600 bg-red-50 p-2 text-center text-red-900"
 			>
 				{$t('common.error.unauthorized')}
+			</div>
+		{:else if searching}
+			<div class="text-center">
+				<div class="loading-bars"></div>
 			</div>
 		{:else if form?.definition}
 			<Word
