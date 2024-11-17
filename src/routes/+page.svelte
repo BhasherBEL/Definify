@@ -11,7 +11,7 @@
 	$effect(() => (wordIsSaved = form?.saved));
 </script>
 
-<div class="mt-24 text-center font-['SourGrummy'] text-4xl">{$t('home.slogan')}</div>
+<div class="mx-4 mt-24 text-center font-serif text-4xl italic lg:text-5xl">{$t('home.slogan')}</div>
 
 <div class="mx-4">
 	<form class="mx-auto mt-16 max-w-5xl" action="?/search" method="POST" use:enhance>
@@ -22,7 +22,7 @@
 			{$t('home.search.button')}
 		</label>
 		<div class="relative">
-			<div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
+			<div class="pointer-events-none absolute inset-y-0 start-0 hidden items-center ps-3 lg:flex">
 				<svg
 					class="h-4 w-4 text-gray-500 dark:text-gray-400"
 					aria-hidden="true"
@@ -44,7 +44,7 @@
 				id="search"
 				name="search"
 				value={form?.word || ''}
-				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-center text-4xl text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pe-16 text-center text-xl text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 lg:ps-10 lg:text-4xl"
 				placeholder={$t('home.search.placeholder')}
 				autocomplete="off"
 				required
