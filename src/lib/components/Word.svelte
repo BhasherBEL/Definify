@@ -3,7 +3,6 @@
 	import toasts from '$lib/utils/toasts';
 	import { get } from 'svelte/store';
 	import { t } from '$lib/translations';
-	import { enhance } from '$app/forms';
 
 	let {
 		word,
@@ -141,10 +140,7 @@
 						{$t('common.words.antonyms')}:
 						<span class="italic">
 							{#each meaning.antonyms as antonym}
-								<form class="inline" action="?/search" method="POST" use:enhance>
-									<input type="search" hidden name="search" value={antonym} />
-									<button>{antonym}</button>
-								</form>
+								<a href={`/words/${antonym}`}>{antonym}</a>
 								{#if antonym !== meaning.antonyms[meaning.antonyms.length - 1]}•
 								{/if}
 							{/each}
@@ -156,10 +152,7 @@
 						{$t('common.words.synonyms')}:
 						<span class="italic">
 							{#each meaning.synonyms as synonym}
-								<form class="inline" action="?/search" method="POST" use:enhance>
-									<input type="search" hidden name="search" value={synonym} />
-									<button>{synonym}</button>
-								</form>
+								<a href={`/words/${synonym}`}>{synonym}</a>
 								{#if synonym !== meaning.synonyms[meaning.synonyms.length - 1]}•
 								{/if}
 							{/each}
