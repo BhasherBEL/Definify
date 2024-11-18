@@ -10,6 +10,7 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		let redirectUrl = safeRedirect(url.searchParams.get('redirect'), url.origin);
 		return redirect(302, redirectUrl);
 	}
+
 	return {};
 };
 

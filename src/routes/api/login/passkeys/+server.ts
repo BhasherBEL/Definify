@@ -13,25 +13,24 @@ import * as tables from '$lib/server/db/schema';
 import * as auth from '$lib/server/auth';
 import { safeRedirect } from '$lib/utils/security';
 
-const inProgress = new Map<string, PublicKeyCredentialRequestOptionsJSON>();
+const inProgress = new Map<
+	string,
+	{ options: PublicKeyCredentialRequestOptionsJSON; date: Date }
+>();
 
 export async function GET({ locals }: RequestEvent) {
 	if (locals.user) {
 		return error(403, 'You are already logged in');
 	}
 
-	const passkeys = await db.query.passkeys.findMany();
-
 	const options: PublicKeyCredentialRequestOptionsJSON = await generateAuthenticationOptions({
 		rpID: rp.id,
-		allowCredentials: passkeys.map((passkey) => ({
-			id: passkey.id
-		}))
+		allowCredentials: []
 	});
 
 	const rid = generateUserId();
 
-	inProgress.set(rid, options);
+	inProgress.set(rid, { options, date: new Date() });
 
 	return json({ rid, options });
 }
@@ -43,14 +42,19 @@ export async function POST({ locals, cookies, request, url }: RequestEvent) {
 
 	const { rid, reply } = await request.json();
 
-	const options = inProgress.get(rid);
-	if (!options) {
-		return error(400, 'Invalid request 1');
+	const optionsStored = inProgress.get(rid);
+	if (!optionsStored) {
+		return error(400, 'Missing registration options');
+	}
+	inProgress.delete(rid);
+	const { options, date } = optionsStored;
+	if (Date.now() - date.getTime() > 5 * 60 * 1000) {
+		return error(400, 'Timeout. Please try again');
 	}
 
 	const passkeyId = reply.id;
 	if (!passkeyId) {
-		return error(400, 'Invalid request 2');
+		return error(400, 'Failed to parse passkey id');
 	}
 
 	const passkey = await db.query.passkeys.findFirst({
@@ -58,10 +62,8 @@ export async function POST({ locals, cookies, request, url }: RequestEvent) {
 		with: { user: true }
 	});
 	if (!passkey) {
-		return error(400, 'Invalid request 3');
+		return error(404, 'Unknown passkey');
 	}
-
-	console.log(typeof passkey.publicKey, passkey.publicKey);
 
 	let verification: VerifiedAuthenticationResponse;
 	try {
@@ -74,16 +76,17 @@ export async function POST({ locals, cookies, request, url }: RequestEvent) {
 				id: passkey.id,
 				publicKey: passkey.publicKey,
 				counter: passkey.counter
-			}
+			},
+			requireUserVerification: false
 		});
 	} catch (e) {
 		console.warn(e);
-		return error(400, 'Invalid request 4');
+		return error(400, 'Failed to verify passkey');
 	}
 
 	const { verified } = verification;
 	if (!verified) {
-		return error(400, 'Invalid request 5');
+		return error(400, 'Passkey refused');
 	}
 
 	const sessionToken = auth.generateSessionToken();

@@ -46,7 +46,7 @@ export async function POST({ locals, request, cookies, url }: RequestEvent) {
 			userName: email,
 			attestationType: 'none',
 			authenticatorSelection: {
-				residentKey: 'preferred',
+				residentKey: 'required',
 				userVerification: 'preferred',
 				authenticatorAttachment: 'cross-platform'
 			}
@@ -73,7 +73,8 @@ export async function POST({ locals, request, cookies, url }: RequestEvent) {
 			response: reply,
 			expectedChallenge: options.challenge,
 			expectedOrigin: rp.origin,
-			expectedRPID: rp.id
+			expectedRPID: rp.id,
+			requireUserVerification: true
 		});
 	} catch (e) {
 		return error(400, 'Invalid registration response');

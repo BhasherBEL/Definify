@@ -6,16 +6,17 @@
 
 	let { form }: { data: PageData; form: ActionData } = $props();
 
+	let error = $state();
+
 	async function loginPasskey() {
 		const optionsResp = await fetch('/api/login/passkeys');
 		const { options: optionsJSON, rid } = await optionsResp.json();
-		console.log(optionsJSON);
 
 		let asseResp;
 		try {
 			asseResp = await startAuthentication({ optionsJSON });
-			console.log(asseResp);
 		} catch (e) {
+			error = e;
 			return;
 		}
 
@@ -35,7 +36,7 @@
 		const verificationJSON = await verificationResp.json();
 
 		if (!verificationResp.ok) {
-			console.warn(verificationJSON);
+			error = verificationJSON.message;
 			return;
 		}
 	}
@@ -52,11 +53,13 @@
 				>
 					{$t('login.title')}
 				</h1>
-				{#if form?.invalid || form?.incorrect}
+				{#if form?.invalid || form?.incorrect || error}
 					<div
 						class="border-2-lg rounded border border-red-600 bg-red-200 p-2 text-center text-red-900"
 					>
-						{#if form?.invalid}
+						{#if error}
+							{error}
+						{:else if form?.invalid}
 							{#if form?.username}
 								{$t('login.error.invalid.username')}
 							{/if}
