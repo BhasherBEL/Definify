@@ -1,15 +1,18 @@
 <script lang="ts">
 	import { t } from '$lib/translations';
 	import { startAuthentication } from '@simplewebauthn/browser';
-	import type { PageData } from '../$types';
-	import type { ActionData } from './$types';
-
-	let { form }: { data: PageData; form: ActionData } = $props();
 
 	let error = $state();
 
 	async function loginPasskey() {
-		const optionsResp = await fetch('/api/login/passkeys');
+		const optionsResp = await fetch('/api/login/passkeys', {
+			redirect: 'follow'
+		});
+
+		if (optionsResp.redirected) {
+			window.location.href = optionsResp.url;
+		}
+
 		const { options: optionsJSON, rid } = await optionsResp.json();
 
 		let asseResp;
@@ -25,7 +28,7 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ rid, reply: asseResp }),
+			body: JSON.stringify({ rid, response: asseResp }),
 			redirect: 'follow'
 		});
 
@@ -53,22 +56,11 @@
 				>
 					{$t('login.title')}
 				</h1>
-				{#if form?.invalid || form?.incorrect || error}
+				{#if error}
 					<div
 						class="border-2-lg rounded border border-red-600 bg-red-200 p-2 text-center text-red-900"
 					>
-						{#if error}
-							{error}
-						{:else if form?.invalid}
-							{#if form?.username}
-								{$t('login.error.invalid.username')}
-							{/if}
-							{#if form?.password}
-								{$t('login.error.invalid.password')}
-							{/if}
-						{:else if form?.incorrect}
-							{$t('login.error.incorrect')}
-						{/if}
+						{error}
 					</div>
 				{/if}
 				<div class="flex flex-col">
@@ -134,7 +126,7 @@
 							</div>
 						</div>
 						<a
-							href="#"
+							href="#forgot"
 							class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
 						>
 							{$t('login.forgotPassword')}

@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm';
-import { sqliteTable, text, integer, primaryKey, blob, unique } from 'drizzle-orm/sqlite-core';
-import { customUint8Array } from './types';
+import { sqliteTable, text, integer, primaryKey } from 'drizzle-orm/sqlite-core';
+import { Passkey, Session, User, Password } from '@bhasher/svelte-auth';
 
 const timestamp = {
 	createdAt: integer('created_at', { mode: 'timestamp' })
@@ -11,40 +11,40 @@ const timestamp = {
 		.$defaultFn(() => new Date())
 };
 
-export const users = sqliteTable('user', {
-	id: text('id').primaryKey(),
-	username: text('username').notNull().unique(),
-	email: text('email').notNull().unique(),
-	passwordHash: text('password_hash')
-});
+export const users = sqliteTable('users', User.getSqliteColumnsMap(), User.getSqliteColumnsConfig);
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(users, ({ many, one }) => ({
 	words: many(usersWords),
+	password: one(passwords, {
+		fields: [users.id],
+		references: [passwords.userId]
+	}),
 	passkeys: many(passkeys)
 }));
 
-export const session = sqliteTable('session', {
-	id: text('id').primaryKey(),
-	userId: text('user_id')
-		.notNull()
-		.references(() => users.id),
-	expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull()
-});
+export const passwords = sqliteTable(
+	'passwords',
+	Password.getSqliteColumnsMap(users),
+	Password.getSqliteColumnsConfig
+);
+
+export const sessions = sqliteTable(
+	'sessions',
+	Session.getSqliteColumnsMap(users),
+	Session.getSqliteColumnsConfig
+);
+
+export const sessionRelations = relations(sessions, ({ one }) => ({
+	user: one(users, {
+		fields: [sessions.userId],
+		references: [users.id]
+	})
+}));
 
 export const passkeys = sqliteTable(
 	'passkeys',
-	{
-		id: text('id').primaryKey(),
-		userId: text('user_id')
-			.notNull()
-			.references(() => users.id),
-		publicKey: customUint8Array('public_key').notNull(),
-		webauthnUserId: text('webauthn_user_id').notNull(),
-		counter: integer('counter').notNull(),
-		transports: text('transports').notNull(),
-		...timestamp
-	},
-	(t) => ({ unq: unique().on(t.userId, t.webauthnUserId) })
+	Passkey.getSqliteColumnsMap(users),
+	Passkey.getSqliteColumnsConfig
 );
 
 export const passskeysRelations = relations(passkeys, ({ one }) => ({
@@ -85,11 +85,5 @@ export const usersWordsRelations = relations(usersWords, ({ one }) => ({
 		references: [words.id]
 	})
 }));
-
-export type Session = typeof session.$inferSelect;
-
-export type User = typeof users.$inferSelect;
-
-export type Passkey = typeof passkeys.$inferSelect;
 
 export type Word = typeof words.$inferSelect;

@@ -50,6 +50,7 @@
 		"dotenv": "^16.4.5",
 		"drizzle-orm": "^0.33.0",
 		"svelte-gravatar": "^1.0.3",
-		"sveltekit-i18n": "^2.4.2"
+		"sveltekit-i18n": "^2.4.2",
+		"@bhasher/svelte-auth": "^1.0.0"
 	}
 }

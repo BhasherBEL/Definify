@@ -1,25 +1,20 @@
 <script lang="ts">
 	import { t } from '$lib/translations';
 	import { get } from 'svelte/store';
-	import type { PageData } from '../$types';
-	import type { ActionData } from './$types';
 	import { startRegistration } from '@simplewebauthn/browser';
 	import type { PublicKeyCredentialCreationOptionsJSON } from '@simplewebauthn/types';
-
-	let { form }: { data: PageData; form: ActionData } = $props();
 
 	let step = $state(0);
 
 	let error: string | undefined = $state();
 
-	let username: string | undefined = $state();
 	let email: string | undefined = $state();
 	let password: string | undefined = $state();
 	let confirmPassword: string | undefined = $state();
 
 	async function buttonClick() {
 		if (step === 0) {
-			if (!username || !email) return;
+			if (!email) return;
 
 			step++;
 			return;
@@ -27,15 +22,15 @@
 	}
 
 	async function registerPasskey() {
-		if (!username || !email) return;
+		if (!email) return;
 
-		const optionsResp = await fetch('/api/register/passkeys', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ username, email })
+		const optionsResp = await fetch('/api/register/passkeys?' + new URLSearchParams({ email }), {
+			redirect: 'follow'
 		});
+
+		if (optionsResp.redirected) {
+			window.location.href = optionsResp.url;
+		}
 
 		if (!optionsResp.ok) {
 			error = await optionsResp.text();
@@ -64,7 +59,7 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ reply: attResp, email, username }),
+			body: JSON.stringify({ response: attResp, email }),
 			redirect: 'follow'
 		});
 
@@ -78,6 +73,11 @@
 			error = verificationJSON.message;
 			return;
 		}
+	}
+
+	function verifyEmail(email?: string) {
+		if (!email) return;
+		return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email);
 	}
 </script>
 
@@ -93,44 +93,15 @@
 					{$t('register.title')}
 				</h1>
 
-				{#if form?.invalid || form?.error || error}
+				{#if error}
 					<div
 						class="border-2-lg mb-4 rounded border border-red-600 bg-red-200 p-2 text-center text-red-900"
 					>
-						{#if error}
-							{error}
-						{:else if form?.invalid}
-							{#if form?.username}
-								{$t('register.error.invalid.username')}
-							{:else if form?.password}
-								{$t('login.error.invalid.password')}
-							{:else if form?.email}
-								{$t('register.error.invalid.email')}
-							{:else if form?.confirmPassword}
-								{$t('register.error.invalid.confirmPassword')}
-							{/if}
-						{:else}
-							{$t('common.error.unknown')}
-						{/if}
+						{error}
 					</div>
 				{/if}
 				<div class="space-y-4 md:space-y-6">
 					{#if step === 0}
-						<div>
-							<label
-								for="username"
-								class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-							>
-								{$t('register.username')}
-							</label>
-							<input
-								type="text"
-								name="username"
-								id="username"
-								class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-								bind:value={username}
-							/>
-						</div>
 						<div>
 							<label
 								for="email"
@@ -142,7 +113,7 @@
 								type="email"
 								name="email"
 								id="email"
-								class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+								class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-center text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
 								bind:value={email}
 							/>
 						</div>
@@ -194,7 +165,7 @@
 					<button
 						class="w-full rounded-lg border border-transparent bg-primary-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 disabled:border-primary-400 disabled:bg-primary-100 disabled:text-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
 						onclick={buttonClick}
-						disabled={(step === 0 && (!username || !email)) ||
+						disabled={(step === 0 && !verifyEmail(email)) ||
 							(step === 1 && (!password || !confirmPassword))}
 					>
 						{#if step === 1}
