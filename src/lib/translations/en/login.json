@@ -1,6 +1,6 @@
 {
 	"title": "Sign in to your account",
-	"username": "Username",
+	"email": "Email",
 	"password": "Password",
 	"forgotPassword": "Forgot password?",
 	"button": "Sign in",

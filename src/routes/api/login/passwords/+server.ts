@@ -15,10 +15,11 @@ export async function POST({ locals, request, cookies, url }: RequestEvent) {
 	}
 
 	try {
-		const userId = await auth.loginPassword(email, password);
+		const userId = await auth.loginEmailPassword(email, password);
 		await auth.initSession(cookies, userId);
 	} catch (e: any) {
-		return error(400, e);
+		console.log(e);
+		return error(400, "Couldn't log in");
 	}
 
 	return safeRedirectAuto(url);

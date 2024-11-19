@@ -18,6 +18,30 @@
 
 			step++;
 			return;
+		} else if (step === 1) {
+			if (!email || !password || !confirmPassword) return;
+			if (password !== confirmPassword) {
+				error = get(t)('register.error.password.match');
+				return;
+			}
+
+			const resp = await fetch('/api/register/passwords', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ email, password }),
+				redirect: 'follow'
+			});
+
+			if (resp.redirected) {
+				window.location.href = resp.url;
+			}
+
+			if (!resp.ok) {
+				error = await resp.text();
+				return;
+			}
 		}
 	}
 

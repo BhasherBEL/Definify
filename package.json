@@ -38,6 +38,7 @@
 		"vite": "^5.0.3"
 	},
 	"dependencies": {
+		"@bhasher/svelte-auth": "^1.0.0",
 		"@libsql/client": "^0.9.0",
 		"@node-rs/argon2": "^1.1.0",
 		"@oslojs/crypto": "^1.0.1",
@@ -50,7 +51,6 @@
 		"dotenv": "^16.4.5",
 		"drizzle-orm": "^0.33.0",
 		"svelte-gravatar": "^1.0.3",
-		"sveltekit-i18n": "^2.4.2",
-		"@bhasher/svelte-auth": "^1.0.0"
+		"sveltekit-i18n": "^2.4.2"
 	}
 }
