@@ -88,7 +88,7 @@
 					</div>
 				</div>
 				<div
-					class="relative hidden flex-grow divide-black overflow-y-hidden text-sm after:absolute after:bottom-0 after:h-16 after:w-full after:bg-gradient-to-t after:from-white after:to-transparent md:block"
+					class="relative hidden flex-grow divide-black overflow-y-hidden text-sm after:absolute after:bottom-0 after:h-16 after:w-full after:bg-gradient-to-t after:from-white after:to-transparent dark:after:from-gray-700 md:block"
 				>
 					<div class="divide-y divide-dashed divide-black md:grid">
 						{#each word.definitions as definition}

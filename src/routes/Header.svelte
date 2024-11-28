@@ -7,9 +7,11 @@
 </script>
 
 <header
-	class="md:border-b md:border-gray-200 md:bg-gray-50 md:shadow-[0_0_6px_0_rgba(0,14,156,.2)]"
+	class="md:border-b md:border-gray-200 md:shadow-[0_0_6px_0_rgba(0,14,156,.2)] dark:md:border-gray-500"
 >
-	<nav class="px-4 py-2 md:border-gray-200 md:bg-white md:px-6 md:py-2.5 md:dark:bg-gray-800">
+	<nav
+		class="px-4 py-2 md:border-gray-200 md:bg-white md:px-6 md:py-2.5 md:dark:border-gray-800 dark:md:bg-gray-800"
+	>
 		<div class="mx-auto flex flex-wrap items-center justify-between">
 			<a
 				href="/"
