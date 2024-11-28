@@ -6,7 +6,7 @@
 	let user = data.user;
 </script>
 
-<div class="m-4 flex flex-grow flex-col">
+<div class="m-4 flex flex-grow flex-col md:mx-auto md:w-[42rem]">
 	<div class="flex-grow">
 		{#if user}
 			<label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
@@ -23,6 +23,9 @@
 		{/if}
 		<span class="mb-2 mt-4 block text-sm font-medium text-gray-900 dark:text-white">
 			{$t('common.words.theme')}
+			<span class="float-right text-xs italic text-gray-500"
+				>{$t('account.theme.device-specific')}</span
+			>
 		</span>
 		<div
 			class="grid grid-cols-3 divide-x divide-gray-400 overflow-hidden rounded-lg border border-gray-400 dark:divide-gray-600 dark:border-gray-600 dark:text-white"

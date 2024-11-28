@@ -38,15 +38,15 @@
 </script>
 
 <div
-	class="mt-4 lg:mx-4 lg:grid lg:grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))] lg:place-items-center lg:gap-4"
+	class="mt-4 md:mx-4 md:grid md:grid-cols-[repeat(auto-fit,_minmax(400px,_1fr))] md:place-items-center md:gap-4"
 >
 	{#each words as word}
 		<a
 			href={`/words/${word.word}`}
-			class="m-2 flex items-center rounded-lg border p-4 py-2 shadow-[0_0_6px_0_rgba(0,14,156,.2)] hover:shadow-inner dark:border-gray-500 dark:bg-gray-700 lg:m-0 lg:w-full lg:items-start lg:pb-0"
+			class="m-2 flex items-center rounded-lg border p-4 py-2 shadow-[0_0_6px_0_rgba(0,14,156,.2)] hover:shadow-inner dark:border-gray-500 dark:bg-gray-700 md:m-0 md:w-full md:items-start md:pb-0"
 		>
-			<div class="flex flex-grow lg:h-32 lg:flex-col">
-				<div class="mr-5 flex flex-grow bg-white dark:bg-transparent lg:w-full lg:flex-none">
+			<div class="flex flex-grow md:h-32 md:flex-col">
+				<div class="mr-5 flex flex-grow bg-white dark:bg-transparent md:w-full md:flex-none">
 					<div class="flex-grow text-xl capitalize dark:text-white">{word.word}</div>
 					<div class="flex items-center justify-end gap-5">
 						<span class="text-sm lowercase italic text-gray-500">
@@ -88,9 +88,9 @@
 					</div>
 				</div>
 				<div
-					class="relative hidden flex-grow divide-black overflow-y-hidden text-sm after:absolute after:bottom-0 after:h-16 after:w-full after:bg-gradient-to-t after:from-white after:to-transparent lg:block"
+					class="relative hidden flex-grow divide-black overflow-y-hidden text-sm after:absolute after:bottom-0 after:h-16 after:w-full after:bg-gradient-to-t after:from-white after:to-transparent md:block"
 				>
-					<div class="divide-y divide-dashed divide-black lg:grid">
+					<div class="divide-y divide-dashed divide-black md:grid">
 						{#each word.definitions as definition}
 							<div class="py-1">
 								<span class="text-xs uppercase text-gray-500">({definition.type})</span>
@@ -99,7 +99,7 @@
 						{/each}
 					</div>
 				</div>
-				<span class="my-auto size-fit lg:invisible lg:size-0">
+				<span class="my-auto size-fit md:invisible md:size-0">
 					<svg
 						class="size-3 -rotate-90"
 						aria-hidden="true"

@@ -2,6 +2,7 @@
 	"theme": {
 		"light": "Light",
 		"auto": "Auto",
-		"dark": "Dark"
+		"dark": "Dark",
+		"device-specific": "Device Specific"
 	}
 }

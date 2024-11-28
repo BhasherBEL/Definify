@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { t } from '$lib/translations';
 	import { startAuthentication } from '@simplewebauthn/browser';
-	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
 
 	const { form }: { form: ActionData } = $props();
@@ -50,7 +49,7 @@
 </script>
 
 <section class="bg-gray-50 dark:bg-gray-900">
-	<div class="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
+	<div class="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen">
 		<div
 			class="w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md md:mt-0 xl:p-0"
 		>
@@ -84,7 +83,7 @@
 					<span class="mx-4 flex-shrink text-gray-400">{$t('common.word.or')}</span>
 					<div class="flex-grow border-t border-gray-400"></div>
 				</div>
-				<form class="space-y-4 md:space-y-6" use:enhance method="POST">
+				<form class="space-y-4 md:space-y-6" method="POST">
 					<div>
 						<label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
 							{$t('login.email')}

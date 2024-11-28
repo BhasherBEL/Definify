@@ -16,7 +16,7 @@
 </script>
 
 <div
-	class="relative z-10 grid grid-cols-3 justify-around border-t bg-white p-1 dark:border-neutral-950 dark:bg-gray-700 dark:fill-white dark:text-white lg:hidden"
+	class="relative z-10 grid grid-cols-3 justify-around border-t bg-white p-1 dark:border-neutral-950 dark:bg-gray-700 dark:fill-white dark:text-white md:hidden"
 >
 	<a
 		href="/words"

@@ -10,7 +10,7 @@
 
 <div class="mx-4">
 	<form
-		class="mx-auto mt-5 max-w-5xl"
+		class="mx-auto mt-5 max-w-5xl md:mb-8 md:mt-16"
 		action="?/search"
 		method="POST"
 		use:enhance={() => {
@@ -44,7 +44,7 @@
 				id="search"
 				name="search"
 				value={form?.word || ''}
-				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-xl placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-500 lg:ps-10 lg:text-4xl"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-xl placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-500"
 				placeholder={$t('home.search.placeholder')}
 				autocomplete="off"
 				required
@@ -73,11 +73,11 @@
 	<div class="py-2">{$t('home.suggestions')}</div>
 
 	<div
-		class="no-scrollbar -mx-4 flex flex-1 snap-x snap-mandatory space-x-2 overflow-x-scroll px-4 dark:text-white"
+		class="no-scrollbar -mx-4 flex flex-1 snap-x snap-mandatory space-x-2 overflow-x-scroll px-4 dark:text-white md:grid md:grid-cols-4"
 	>
 		{#each data.suggestions as suggestion (suggestion.id)}
 			<a
-				class="h-32 flex-[0_0_90vw] snap-center overflow-y-hidden rounded-lg border bg-white p-2 dark:border-neutral-950 dark:bg-gray-700 dark:text-white"
+				class="h-32 flex-[0_0_90vw] snap-center overflow-y-hidden rounded-lg border bg-white p-2 dark:border-neutral-950 dark:bg-gray-700 dark:text-white md:flex-[0_0_32rem]"
 				href="/words/{suggestion.word}"
 			>
 				<div class="mb-2">
