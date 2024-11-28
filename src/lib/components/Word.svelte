@@ -74,7 +74,7 @@
 {#each definitions as def}
 	<div class="border-b-4 border-b-primary-600">
 		<div class="flex flex-row justify-between py-4">
-			<div class="font-serif text-6xl font-bold">
+			<div class="font-serif text-6xl font-bold dark:text-white">
 				{word}
 			</div>
 			<div class="flex items-center text-gray-600">
@@ -92,6 +92,7 @@
 						stroke="currentColor"
 						class="size-10 hover:cursor-pointer"
 						class:fill-black={isSaved}
+						class:dark:fill-white={isSaved}
 					>
 						<path
 							stroke-linecap="round"
@@ -102,7 +103,7 @@
 				</button>
 			</div>
 		</div>
-		<div class="flex gap-4 space-y-4 space-y-reverse text-xl">
+		<div class="flex gap-4 space-y-4 space-y-reverse text-xl dark:text-white">
 			{#each def.phonetics as phonetic}
 				{#if phonetic.text}
 					<span>{phonetic.text}</span>
@@ -130,13 +131,17 @@
 		</div>
 	</div>
 	{#each def.meanings as meaning}
-		<div class="my-4 border-b-2 border-b-secondary-200 text-xl text-primary-900">
+		<div
+			class="my-4 border-b-2 border-b-secondary-200 text-xl text-primary-900 dark:border-b-secondary-900 dark:text-primary-300"
+		>
 			<span class="font-bold">{word}</span>
 			•
 			<span class="italic">{meaning.partOfSpeech}</span>
 		</div>
 		{#if (meaning.antonyms && meaning.antonyms.length > 0) || (meaning.synonyms && meaning.synonyms.length > 0)}
-			<div class="mb-4 w-fit rounded-lg border p-2 text-gray-700">
+			<div
+				class="mb-4 w-fit rounded-lg border p-2 text-gray-700 dark:border-gray-500 dark:text-gray-300"
+			>
 				{#if meaning.antonyms && meaning.antonyms.length > 0}
 					<div class="text-lg">
 						{$t('common.words.antonyms')}:
@@ -164,7 +169,7 @@
 			</div>
 		{/if}
 		{#each meaning.definitions as mdef}
-			<div class="mb-4">
+			<div class="mb-4 dark:text-white">
 				<div class="mb-1 text-lg">
 					{mdef.definition}
 				</div>
@@ -195,8 +200,8 @@
 		{/each}
 	{/each}
 	{#if def.sourceUrls && def.sourceUrls.length > 0}
-		<div class="border-t-2 border-t-primary-200">
-			<div class="my-4 text-xl font-bold text-primary-900">
+		<div class="border-t-2 border-t-primary-200 dark:border-t-primary-800">
+			<div class="my-4 text-xl font-bold text-primary-900 dark:text-primary-300">
 				{$t('common.words.sources')}
 			</div>
 			<ul class="list-inside list-disc">
@@ -206,7 +211,7 @@
 							href={sourceUrl}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="text-blue-700 hover:underline"
+							class="text-blue-700 hover:underline dark:text-blue-300"
 						>
 							{sourceUrl}
 						</a>

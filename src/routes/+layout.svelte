@@ -14,10 +14,9 @@
 	<title>{$t('common.name')}</title>
 </svelte:head>
 
-<div class="flex h-dvh flex-col overflow-hidden">
-	<Header {data} />
-
-	<div class="flex-grow overflow-y-scroll">
+<div class="flex h-dvh flex-col overflow-hidden bg-primary-50 dark:bg-black">
+	<div class="flex flex-grow flex-col overflow-y-scroll">
+		<Header {data} />
 		{@render children()}
 	</div>
 

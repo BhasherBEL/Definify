@@ -1,23 +1,16 @@
 <script lang="ts">
 	import { t } from '$lib/translations';
 	import { enhance } from '$app/forms';
-	import type { LayoutData } from './$types';
-	import Word from '$lib/components/Word.svelte';
+	import type { ActionData, PageData } from './$types';
 
-	let { form, data }: { data: LayoutData; form: FormData } = $props();
-
-	let wordIsSaved = $state(form?.saved || false);
+	let { form, data }: { data: PageData; form: ActionData } = $props();
 
 	let searching = $state(false);
-
-	$effect(() => (wordIsSaved = form?.saved));
 </script>
-
-<div class="mx-4 mt-24 text-center font-serif text-4xl italic lg:text-5xl">{$t('home.slogan')}</div>
 
 <div class="mx-4">
 	<form
-		class="mx-auto mt-16 max-w-5xl"
+		class="mx-auto mt-5 max-w-5xl"
 		action="?/search"
 		method="POST"
 		use:enhance={() => {
@@ -28,14 +21,8 @@
 			};
 		}}
 	>
-		<label
-			for="default-search"
-			class="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
-		>
-			{$t('home.search.button')}
-		</label>
 		<div class="relative">
-			<div class="pointer-events-none absolute inset-y-0 start-0 hidden items-center ps-3 lg:flex">
+			<div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
 				<svg
 					class="h-4 w-4 text-gray-500 dark:text-gray-400"
 					aria-hidden="true"
@@ -57,30 +44,18 @@
 				id="search"
 				name="search"
 				value={form?.word || ''}
-				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 pe-16 text-center text-xl text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 lg:ps-10 lg:text-4xl"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-xl placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:border-blue-500 dark:focus:ring-blue-500 lg:ps-10 lg:text-4xl"
 				placeholder={$t('home.search.placeholder')}
 				autocomplete="off"
 				required
 			/>
-			<button
-				type="submit"
-				class="absolute end-0 top-0 h-full rounded-e-lg border border-blue-700 bg-blue-700 p-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-			>
-				{$t('home.search.button')}
-			</button>
 		</div>
 	</form>
 
-	<div class="mx-auto my-12 max-w-5xl">
+	<div class="mx-auto my-4 max-w-5xl">
 		{#if form?.notFound && form?.word}
 			<div class="rounded border border-red-600 bg-red-50 p-2 text-center text-red-900">
 				{$t('home.error.notFound', { word: form.word })}
-			</div>
-		{:else if form?.apiError}
-			<div
-				class="mx-auto max-w-5xl rounded border border-red-600 bg-red-50 p-2 text-center text-red-900"
-			>
-				{$t('home.error.api')}
 			</div>
 		{:else if form?.invalid}
 			<div
@@ -88,23 +63,29 @@
 			>
 				{$t('home.error.invalid')}
 			</div>
-		{:else if form?.unauthorized}
-			<div
-				class="mx-auto max-w-5xl rounded border border-red-600 bg-red-50 p-2 text-center text-red-900"
-			>
-				{$t('common.error.unauthorized')}
-			</div>
 		{:else if searching}
 			<div class="text-center">
 				<div class="loading-bars"></div>
 			</div>
-		{:else if form?.definition}
-			<Word
-				bind:isSaved={wordIsSaved}
-				word={form?.word}
-				definitions={form.definition}
-				isLoggedIn={!!data.user}
-			/>
 		{/if}
+	</div>
+
+	<div class="py-2">{$t('home.suggestions')}</div>
+
+	<div
+		class="no-scrollbar -mx-4 flex flex-1 snap-x snap-mandatory space-x-2 overflow-x-scroll px-4 dark:text-white"
+	>
+		{#each data.suggestions as suggestion (suggestion.id)}
+			<a
+				class="h-32 flex-[0_0_90vw] snap-center overflow-y-hidden rounded-lg border bg-white p-2 dark:border-neutral-950 dark:bg-gray-700 dark:text-white"
+				href="/words/{suggestion.word}"
+			>
+				<div class="mb-2">
+					<span class="font-bold capitalize">{suggestion.word}</span>
+					<span class="float-right mr-2 italic text-gray-500">{suggestion.partOfSpeech}</span>
+				</div>
+				<div class="">{suggestion.definition}</div>
+			</a>
+		{/each}
 	</div>
 </div>

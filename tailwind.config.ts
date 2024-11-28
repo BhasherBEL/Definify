@@ -3,7 +3,7 @@ import type { Config } from 'tailwindcss';
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 
-	darkMode: 'class',
+	darkMode: 'media',
 	theme: {
 		extend: {
 			colors: {
@@ -18,7 +18,7 @@ export default {
 					'700': '#7e22ce',
 					'800': '#6b21a8',
 					'900': '#581c87',
-					'950': '#3b0764'
+					'950': '#1d0432'
 				},
 				secondary: {
 					'50': '#f5f7fa',

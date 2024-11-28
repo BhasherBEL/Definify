@@ -1,11 +1,10 @@
-import { error } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 import auth from '$lib/server/auth';
-import { safeRedirectAuto } from '$lib/utils/security';
 
-export async function POST({ locals, request, cookies, url }: RequestEvent) {
+export async function POST({ locals, request, cookies }: RequestEvent) {
 	if (locals.user) {
-		return safeRedirectAuto(url);
+		return json({});
 	}
 
 	const { email, password } = await request.json();
@@ -22,5 +21,5 @@ export async function POST({ locals, request, cookies, url }: RequestEvent) {
 		return error(400, "Couldn't log in");
 	}
 
-	return safeRedirectAuto(url);
+	return json({});
 }

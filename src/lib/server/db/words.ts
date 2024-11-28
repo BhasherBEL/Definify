@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { desc, eq, sql } from 'drizzle-orm';
 import type { Word } from './schema';
 import * as table from './schema';
 import { db } from '.';
@@ -46,4 +46,12 @@ export async function getWord(word: string): Promise<Word | null> {
 		return wordDb;
 	}
 	return null;
+}
+
+export async function getSuggestedWords(amount: number): Promise<Word[]> {
+	return db
+		.select()
+		.from(table.words)
+		.orderBy(sql`random()`)
+		.limit(amount);
 }

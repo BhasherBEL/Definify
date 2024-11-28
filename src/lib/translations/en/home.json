@@ -1,12 +1,11 @@
 {
 	"search": {
-		"placeholder": "Type a word",
-		"button": "Search"
+		"placeholder": "Search a word"
 	},
-	"slogan": "All the words at your fingertips.",
 	"error": {
 		"notFound": "No definition found for \"{word}\"",
 		"api": "An error occurred while fetching the definition",
 		"invalid": "Invalid word"
-	}
+	},
+	"suggestions": "Random suggestions"
 }

@@ -6,7 +6,7 @@ import { db } from '$lib/server/db';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.user) {
-		return redirect(302, '/login');
+		return redirect(302, '/login?redirect=/words');
 	}
 
 	const words = (

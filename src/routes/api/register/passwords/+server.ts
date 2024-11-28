@@ -1,11 +1,10 @@
-import { error } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 import auth from '$lib/server/auth';
-import { safeRedirectAuto } from '$lib/utils/security';
 
-export async function POST({ locals, request, cookies, url }: RequestEvent) {
+export async function POST({ locals, request, cookies }: RequestEvent) {
 	if (locals.user) {
-		return safeRedirectAuto(url);
+		return error(403, 'Forbidden');
 	}
 
 	const { email, password } = await request.json();
@@ -14,13 +13,14 @@ export async function POST({ locals, request, cookies, url }: RequestEvent) {
 		return error(400, 'Bad request');
 	}
 
+	let userId;
 	try {
-		const userId = await auth.registerUser(email);
+		userId = await auth.registerUser(email);
 		await auth.registerPassword(userId, password);
 		await auth.initSession(cookies, userId);
 	} catch (e: any) {
 		return error(400, e);
 	}
 
-	return safeRedirectAuto(url);
+	return json({ id: userId }, { status: 201 });
 }

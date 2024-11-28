@@ -17,8 +17,8 @@
 		"antonyms": "Antonyms",
 		"synonyms": "Synonyms",
 		"sources": "Sources",
-		"saved": "Word saved",
-		"removed": "Word removed"
+		"email": "Email",
+		"password": "Password"
 	},
 	"word": {
 		"definitions": "{n, plural, =1 {Definition} other {Definitions}}",
