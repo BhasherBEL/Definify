@@ -3,6 +3,9 @@ import type { Handle } from '@sveltejs/kit';
 
 const handleAuth: Handle = async ({ event, resolve }) => {
 	const sessionToken = event.cookies.get(auth.sessionCookieName);
+
+	event.locals.theme = event.cookies.get('theme');
+
 	if (!sessionToken) {
 		event.locals.user = null;
 		event.locals.session = null;

@@ -8,13 +8,16 @@
 	import Footer from './Footer.svelte';
 
 	let { data, children }: { data: LayoutData; children: any } = $props();
+	let theme = data.theme;
 </script>
 
 <svelte:head>
 	<title>{$t('common.name')}</title>
 </svelte:head>
 
-<div class="flex h-dvh flex-col overflow-hidden bg-primary-50 dark:bg-black">
+<div
+	class={`flex h-dvh flex-col overflow-hidden bg-primary-50 dark:bg-black ${theme === 'dark' ? 'dark' : ''}`}
+>
 	<div class="flex flex-grow flex-col overflow-y-scroll">
 		<Header {data} />
 		{@render children()}

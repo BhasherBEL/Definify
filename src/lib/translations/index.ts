@@ -40,6 +40,12 @@ const config: Config = {
 			locale: 'en',
 			routes: ['/'],
 			loader: async () => (await import('./en/home.json')).default
+		},
+		{
+			key: 'account',
+			locale: 'en',
+			routes: ['/account'],
+			loader: async () => (await import('./en/account.json')).default
 		}
 	],
 	fallbackLocale: 'en'

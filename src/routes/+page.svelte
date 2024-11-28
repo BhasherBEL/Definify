@@ -44,7 +44,7 @@
 				id="search"
 				name="search"
 				value={form?.word || ''}
-				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-xl placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:border-blue-500 dark:focus:ring-blue-500 lg:ps-10 lg:text-4xl"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-xl placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-500 lg:ps-10 lg:text-4xl"
 				placeholder={$t('home.search.placeholder')}
 				autocomplete="off"
 				required

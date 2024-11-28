@@ -6,10 +6,11 @@ export const load: Load = async ({ url, data }) => {
 	const { pathname } = url;
 
 	const user: User | null = data?.user;
+	const theme: string | undefined = data?.theme;
 
 	const initLocale = 'en';
 
 	await loadTranslations(initLocale, pathname);
 
-	return { user, locale };
+	return { user, locale, theme };
 };

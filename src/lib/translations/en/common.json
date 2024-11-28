@@ -18,7 +18,8 @@
 		"synonyms": "Synonyms",
 		"sources": "Sources",
 		"email": "Email",
-		"password": "Password"
+		"password": "Password",
+		"theme": "Theme"
 	},
 	"word": {
 		"definitions": "{n, plural, =1 {Definition} other {Definitions}}",
