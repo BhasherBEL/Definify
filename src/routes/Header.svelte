@@ -6,12 +6,8 @@
 	let user = data?.user || null;
 </script>
 
-<header
-	class="md:border-b md:border-gray-200 md:shadow-[0_0_6px_0_rgba(0,14,156,.2)] dark:md:border-gray-500"
->
-	<nav
-		class="px-4 py-2 md:border-gray-200 md:bg-white md:px-6 md:py-2.5 md:dark:border-gray-800 dark:md:bg-gray-800"
-	>
+<header>
+	<nav class="mx-auto px-4 py-2 md:max-w-5xl md:px-2 md:py-2.5">
 		<div class="mx-auto flex flex-wrap items-center justify-between">
 			<a
 				href="/"

@@ -2,21 +2,25 @@
 	import { t } from '$lib/translations';
 	import { enhance } from '$app/forms';
 	import type { ActionData, PageData } from './$types';
+	import Word from '$lib/components/Word.svelte';
 
 	let { form, data }: { data: PageData; form: ActionData } = $props();
 
 	let searching = $state(false);
+	let searchResult: { saved: boolean; word: string; definition: string } | undefined = $state(
+		form?.searchResult
+	);
 </script>
 
-<div class="mx-4">
+<div class="mx-auto max-w-5xl px-2 pb-8">
 	<form
 		class="mx-auto mt-5 max-w-5xl md:mb-8 md:mt-16"
 		action="?/search"
 		method="POST"
 		use:enhance={() => {
 			searching = true;
-			return async ({ update }) => {
-				await update();
+			return async ({ result }) => {
+				if (result.type == 'success' && result.data) searchResult = result.data;
 				searching = false;
 			};
 		}}
@@ -70,14 +74,36 @@
 		{/if}
 	</div>
 
-	<div class="py-2">{$t('home.suggestions')}</div>
+	{#if searchResult}
+		<Word
+			isSaved={searchResult.saved}
+			word={searchResult.word}
+			definitions={searchResult.definition}
+			isLoggedIn={!!data.user}
+		/>
+	{/if}
+
+	<div class="my-4 flex py-2 italic">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			class="animate-spin-frac h-5 w-5"
+			fill="currentColor"
+			viewBox="0 0 448 512"
+			><path
+				d="M384 32H64C28.65 32 0 60.65 0 96v320c0 35.35 28.65 64 64 64h320c35.35 0 64-28.65 64-64V96c0-35.35-28.65-64-64-64zm16 384c0 8.82-7.18 16-16 16H64c-8.82 0-16-7.18-16-16V96c0-8.82 7.18-16 16-16h320c8.82 0 16 7.18 16 16v320zM128 128c-17.67 0-32 14.33-32 32s14.33 32 32 32 32-14.33 32-32-14.33-32-32-32zm96 96c-17.67 0-32 14.33-32 32s14.33 32 32 32 32-14.33 32-32-14.33-32-32-32zm-96 96c-17.67 0-32 14.33-32 32s14.33 32 32 32 32-14.33 32-32-14.33-32-32-32zm192-192c-17.67 0-32 14.33-32 32s14.33 32 32 32 32-14.33 32-32-14.33-32-32-32zm0 192c-17.67 0-32 14.33-32 32s14.33 32 32 32 32-14.33 32-32-14.33-32-32-32z"
+			></path></svg
+		>
+		<div class="ml-2">
+			{$t('home.suggestions')}
+		</div>
+	</div>
 
 	<div
-		class="no-scrollbar -mx-4 flex flex-1 snap-x snap-mandatory space-x-2 overflow-x-scroll px-4 md:grid md:grid-cols-4"
+		class="no-scrollbar -mx-4 flex flex-1 snap-x snap-mandatory space-x-2 overflow-x-scroll px-4 md:grid md:grid-cols-7"
 	>
 		{#each data.suggestions as suggestion (suggestion.id)}
 			<a
-				class="h-32 flex-[0_0_90vw] snap-center overflow-y-hidden rounded-lg border bg-white p-2 md:flex-[0_0_32rem] dark:border-neutral-950 dark:bg-gray-700"
+				class="bg-zone dark:bg-zone-dark col-span-2 h-32 flex-[0_0_90vw] snap-center overflow-y-hidden rounded-xl border p-2 md:flex-[0_0_32rem] dark:border-neutral-600"
 				href="/words/{suggestion.word}"
 			>
 				<div class="mb-2">
@@ -87,5 +113,12 @@
 				<div class="">{suggestion.definition}</div>
 			</a>
 		{/each}
+		<form action="?/suggestions" method="POST" use:enhance>
+			<button
+				class="border-zone size-full animate-pulse rounded-xl border-2 border-dashed hover:bg-gray-500 hover:bg-opacity-10 dark:border-neutral-600"
+			>
+				{$t('home.newSuggestions')}
+			</button>
+		</form>
 	</div>
 </div>

@@ -1,38 +1,22 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { getOrInsertWord, getSuggestedWords } from '$lib/server/db/words';
-import type { Word } from '$lib/server/db/schema';
-
-function getRandomInt(max: number) {
-	return Math.floor(Math.random() * max);
-}
+import { db } from '$lib/server/db';
+import { and, eq } from 'drizzle-orm';
+import * as tables from '$lib/server/db/schema';
 
 export const load: PageServerLoad = async ({}) => {
-	const suggestions: Word[] = await getSuggestedWords(5);
-
-	const simplified = suggestions.map((w) => {
-		const words = JSON.parse(w.definition);
-		const word = words[getRandomInt(words.length)];
-		const meaning = word.meanings[getRandomInt(word.meanings.length)];
-		const definition = meaning.definitions[getRandomInt(meaning.definitions.length)].definition;
-
-		return {
-			id: w.id,
-			word: word.word,
-			definition,
-			partOfSpeech: meaning.partOfSpeech
-		};
-	});
+	const suggestions = await getSuggestedWords(3);
 
 	return {
-		suggestions: simplified
+		suggestions
 	};
 };
 
 export const actions: Actions = {
-	search: async ({ request }) => {
+	search: async ({ request, locals }) => {
 		const formData = await request.formData();
-		const word = formData.get('search');
+		let word = formData.get('search')?.toString().trim().toLowerCase();
 		if (!word) {
 			return fail(400, { invalid: true });
 		}
@@ -43,6 +27,31 @@ export const actions: Actions = {
 			return fail(404, { notFound: true, word });
 		}
 
-		redirect(302, `/words/${word}`);
+		if (!locals.user) {
+			return {
+				searchResult: {
+					definition: wordApi.definition,
+					word,
+					saved: false
+				}
+			};
+		}
+
+		const isSaved = await db.query.usersWords.findFirst({
+			where: and(
+				eq(tables.usersWords.userId, locals.user.id),
+				eq(tables.usersWords.wordId, wordApi.id)
+			)
+		});
+
+		return {
+			word,
+			definition: wordApi.definition,
+			saved: !!isSaved
+		};
+	},
+
+	suggestions: async () => {
+		return {};
 	}
 };

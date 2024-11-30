@@ -48,10 +48,35 @@ export async function getWord(word: string): Promise<Word | null> {
 	return null;
 }
 
-export async function getSuggestedWords(amount: number): Promise<Word[]> {
-	return db
+function getRandomInt(max: number) {
+	return Math.floor(Math.random() * max);
+}
+
+export type SuggestedWord = {
+	id: number;
+	word: string;
+	definition: string;
+	partOfSpeech: string;
+};
+
+export async function getSuggestedWords(amount: number): Promise<SuggestedWord[]> {
+	const suggestions = await db
 		.select()
 		.from(table.words)
 		.orderBy(sql`random()`)
 		.limit(amount);
+
+	return suggestions.map((w) => {
+		const words = JSON.parse(w.definition);
+		const word = words[getRandomInt(words.length)];
+		const meaning = word.meanings[getRandomInt(word.meanings.length)];
+		const definition = meaning.definitions[getRandomInt(meaning.definitions.length)].definition;
+
+		return {
+			id: w.id,
+			word: word.word,
+			definition,
+			partOfSpeech: meaning.partOfSpeech
+		};
+	});
 }

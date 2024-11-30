@@ -7,5 +7,6 @@
 		"api": "An error occurred while fetching the definition",
 		"invalid": "Invalid word"
 	},
-	"suggestions": "Random suggestions"
+	"suggestions": "Want some suggestions?",
+	"newSuggestions": "Again?"
 }

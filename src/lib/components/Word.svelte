@@ -75,7 +75,7 @@
 	<div class="border-b-4 border-b-primary-600">
 		<div class="flex flex-row justify-between py-4">
 			<div class="font-serif text-6xl font-bold">
-				{word}
+				{def.word}
 			</div>
 			<div class="flex items-center">
 				<button
@@ -134,8 +134,6 @@
 		<div
 			class="my-4 border-b-2 border-b-secondary-200 text-xl text-primary-900 dark:border-b-secondary-900 dark:text-primary-300"
 		>
-			<span class="font-bold">{word}</span>
-			•
 			<span class="italic">{meaning.partOfSpeech}</span>
 		</div>
 		{#if (meaning.antonyms && meaning.antonyms.length > 0) || (meaning.synonyms && meaning.synonyms.length > 0)}

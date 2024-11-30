@@ -38,6 +38,16 @@ export default {
 					dark: colors.gray[700],
 					DEFAULT: colors.white
 				}
+			},
+			keyframes: {
+				'spin-frac': {
+					'0%, 10%, 40%, 60%, 90%, to': { transform: 'rotate(0deg)' },
+					'20%, 30%': { transform: 'rotate(300deg)' },
+					'70%, 80%': { transform: 'rotate(-210deg)' }
+				}
+			},
+			animation: {
+				'spin-frac': 'spin-frac 5s linear infinite'
 			}
 		}
 	},
