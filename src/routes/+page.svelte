@@ -114,7 +114,7 @@
 	</div>
 
 	<div class="px-2">
-		{#if searchResult && !form?.notFound && !form?.invalid}
+		{#if searchResult}
 			<Word
 				isSaved={searchResult.saved}
 				word={searchResult.word}

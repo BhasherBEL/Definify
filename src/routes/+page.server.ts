@@ -29,11 +29,9 @@ export const actions: Actions = {
 
 		if (!locals.user) {
 			return {
-				searchResult: {
-					definition: wordApi.definition,
-					word,
-					saved: false
-				}
+				definition: wordApi.definition,
+				word,
+				saved: false
 			};
 		}
 
