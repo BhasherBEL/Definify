@@ -10,20 +10,22 @@
 	let searchResult: { saved: boolean; word: string; definition: string } | undefined = $state(
 		form?.searchResult
 	);
+
+	async function enhanced() {
+		searching = true;
+		return async ({ result }: any) => {
+			if (result.type == 'success' && result.data) searchResult = result.data;
+			searching = false;
+		};
+	}
 </script>
 
-<div class="mx-auto max-w-5xl px-2 pb-8">
+<div class="pb-8 md:mx-auto md:max-w-5xl">
 	<form
-		class="mx-auto mt-5 max-w-5xl md:mb-8 md:mt-16"
+		class="mx-auto mt-5 max-w-5xl px-2 md:mb-8 md:mt-16"
 		action="?/search"
 		method="POST"
-		use:enhance={() => {
-			searching = true;
-			return async ({ result }) => {
-				if (result.type == 'success' && result.data) searchResult = result.data;
-				searching = false;
-			};
-		}}
+		use:enhance={enhanced}
 	>
 		<div class="relative">
 			<div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
@@ -56,7 +58,7 @@
 		</div>
 	</form>
 
-	<div class="mx-auto my-4 max-w-5xl">
+	<div class="mx-auto my-4 max-w-5xl px-2">
 		{#if form?.notFound && form?.word}
 			<div class="rounded border border-red-600 bg-red-50 p-2 text-center text-red-900">
 				{$t('home.error.notFound', { word: form.word })}
@@ -74,16 +76,18 @@
 		{/if}
 	</div>
 
-	{#if searchResult}
-		<Word
-			isSaved={searchResult.saved}
-			word={searchResult.word}
-			definitions={searchResult.definition}
-			isLoggedIn={!!data.user}
-		/>
-	{/if}
+	<div class="px-2">
+		{#if searchResult}
+			<Word
+				isSaved={searchResult.saved}
+				word={searchResult.word}
+				definitions={searchResult.definition}
+				isLoggedIn={!!data.user}
+			/>
+		{/if}
+	</div>
 
-	<div class="my-4 flex py-2 italic">
+	<div class="my-4 flex p-2 italic">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			class="animate-spin-frac h-5 w-5"
@@ -99,19 +103,24 @@
 	</div>
 
 	<div
-		class="no-scrollbar -mx-4 flex flex-1 snap-x snap-mandatory space-x-2 overflow-x-scroll px-4 md:grid md:grid-cols-7"
+		class="no-scrollbar flex w-full flex-1 snap-x snap-mandatory space-x-2 overflow-x-scroll px-4 md:grid md:grid-cols-7 md:px-2"
 	>
 		{#each data.suggestions as suggestion (suggestion.id)}
-			<a
-				class="bg-zone dark:bg-zone-dark col-span-2 h-32 flex-[0_0_90vw] snap-center overflow-y-hidden rounded-xl border p-2 md:flex-[0_0_32rem] dark:border-neutral-600"
-				href="/words/{suggestion.word}"
+			<form
+				action="?/search"
+				method="POST"
+				use:enhance={enhanced}
+				class="bg-zone dark:bg-zone-dark col-span-2 h-32 flex-[0_0_90vw] snap-center overflow-y-hidden rounded-xl border md:flex-[0_0_32rem] dark:border-neutral-600"
 			>
-				<div class="mb-2">
-					<span class="font-bold capitalize">{suggestion.word}</span>
-					<span class="float-right mr-2 italic opacity-50">{suggestion.partOfSpeech}</span>
-				</div>
-				<div class="">{suggestion.definition}</div>
-			</a>
+				<input type="search" id="search" name="search" value={suggestion.word} class="hidden" />
+				<button class="flex size-full flex-col p-2 text-left align-top">
+					<div class="mb-2">
+						<span class="font-bold capitalize">{suggestion.word}</span>
+						<span class="float-right mr-2 italic opacity-50">{suggestion.partOfSpeech}</span>
+					</div>
+					<div class="">{suggestion.definition}</div>
+				</button>
+			</form>
 		{/each}
 		<form action="?/suggestions" method="POST" use:enhance>
 			<button

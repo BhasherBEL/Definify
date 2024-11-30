@@ -40,25 +40,15 @@
 					</a>
 				{/if}
 			</div>
-			<div
-				class="hidden w-full items-center justify-between md:visible md:order-1 md:flex md:w-auto"
-			>
-				<ul class="mt-4 flex flex-col font-medium md:mt-0 md:flex-row md:space-x-8">
+			<div class="order-1 hidden w-auto items-center justify-between md:flex">
+				<ul class="mt-0 flex flex-row space-x-8 font-medium">
 					<li>
-						<a
-							href="/"
-							class="block rounded bg-primary-700 py-2 pl-3 pr-4 text-white md:bg-transparent md:p-0 md:text-primary-700 dark:text-white"
-							aria-current="page"
-						>
+						<a href="/" aria-current="page">
 							{$t('header.menu.home')}
 						</a>
 					</li>
 					<li>
-						<a
-							href="/words"
-							class="block rounded bg-primary-700 py-2 pl-3 pr-4 text-white md:bg-transparent md:p-0 md:text-primary-700 dark:text-white"
-							aria-current="page"
-						>
+						<a href="/words" aria-current="page">
 							{$t('header.menu.words')}
 						</a>
 					</li>

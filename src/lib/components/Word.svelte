@@ -72,12 +72,25 @@
 </script>
 
 {#each definitions as def}
-	<div class="border-b-4 border-b-primary-600">
-		<div class="flex flex-row justify-between py-4">
+	<div>
+		<div class="bg-bg dark:bg-bg-dark sticky top-0 z-20 flex h-24 flex-row justify-between py-4">
 			<div class="font-serif text-6xl font-bold">
 				{def.word}
 			</div>
 			<div class="flex items-center">
+				<a href="/words/{word}" aria-label="External">
+					<svg
+						class="size-10 fill-none stroke-current stroke-1"
+						viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+						<polyline points="15 3 21 3 21 9" />
+						<line x1="10" y1="14" x2="21" y2="3" />
+					</svg>
+				</a>
 				<button
 					aria-label="save"
 					onclick={() => {
@@ -88,9 +101,7 @@
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						class="size-10 hover:cursor-pointer"
+						class="size-10 stroke-current stroke-1 hover:cursor-pointer"
 						class:fill-text={isSaved}
 						class:dark:fill-text-dark={isSaved}
 					>
@@ -129,93 +140,94 @@
 				{/if}
 			{/each}
 		</div>
-	</div>
-	{#each def.meanings as meaning}
-		<div
-			class="my-4 border-b-2 border-b-secondary-200 text-xl text-primary-900 dark:border-b-secondary-900 dark:text-primary-300"
-		>
-			<span class="italic">{meaning.partOfSpeech}</span>
-		</div>
-		{#if (meaning.antonyms && meaning.antonyms.length > 0) || (meaning.synonyms && meaning.synonyms.length > 0)}
-			<div class="mb-4 w-fit rounded-lg border p-2 opacity-70 dark:border-gray-500">
-				{#if meaning.antonyms && meaning.antonyms.length > 0}
-					<div class="text-lg">
-						{$t('common.words.antonyms')}:
-						<span class="italic">
-							{#each meaning.antonyms as antonym}
-								<a href={`/words/${antonym}`}>{antonym}</a>
-								{#if antonym !== meaning.antonyms[meaning.antonyms.length - 1]}•
-								{/if}
-							{/each}
-						</span>
-					</div>
-				{/if}
-				{#if meaning.synonyms && meaning.synonyms.length > 0}
-					<div class="text-lg">
-						{$t('common.words.synonyms')}:
-						<span class="italic">
-							{#each meaning.synonyms as synonym}
-								<a href={`/words/${synonym}`}>{synonym}</a>
-								{#if synonym !== meaning.synonyms[meaning.synonyms.length - 1]}•
-								{/if}
-							{/each}
-						</span>
-					</div>
-				{/if}
+		<div class="sticky top-24 z-30 border-b-4 border-b-primary-600"></div>
+		{#each def.meanings as meaning}
+			<div
+				class="bg-bg dark:bg-bg-dark sticky top-[100px] z-10 my-4 border-b-2 border-b-secondary-200 text-xl text-primary-900 dark:border-b-secondary-900 dark:text-primary-300"
+			>
+				<span class="italic">{meaning.partOfSpeech}</span>
 			</div>
-		{/if}
-		{#each meaning.definitions as mdef}
-			<div class="mb-4 dark:text-white">
-				<div class="mb-1 text-lg">
-					{mdef.definition}
-				</div>
-				<div class="border-l-4 border-stone-200 pl-2">
-					{#if mdef.example}
-						<div class="italic">
-							{mdef.example}
-						</div>
-					{/if}
-					{#if mdef.synonyms && mdef.synonyms.length > 0}
-						<div>
-							{$t('common.words.synonyms')}:
-							<span class="italic">
-								{mdef.synonyms.join(', ')}
-							</span>
-						</div>
-					{/if}
-					{#if mdef.antonyms && mdef.antonyms.length > 0}
-						<div>
+			{#if (meaning.antonyms && meaning.antonyms.length > 0) || (meaning.synonyms && meaning.synonyms.length > 0)}
+				<div class="mb-4 w-fit rounded-lg border p-2 opacity-70 dark:border-gray-500">
+					{#if meaning.antonyms && meaning.antonyms.length > 0}
+						<div class="text-lg">
 							{$t('common.words.antonyms')}:
 							<span class="italic">
-								{mdef.antonyms.join(', ')}
+								{#each meaning.antonyms as antonym}
+									<a href={`/words/${antonym}`}>{antonym}</a>
+									{#if antonym !== meaning.antonyms[meaning.antonyms.length - 1]}•
+									{/if}
+								{/each}
+							</span>
+						</div>
+					{/if}
+					{#if meaning.synonyms && meaning.synonyms.length > 0}
+						<div class="text-lg">
+							{$t('common.words.synonyms')}:
+							<span class="italic">
+								{#each meaning.synonyms as synonym}
+									<a href={`/words/${synonym}`}>{synonym}</a>
+									{#if synonym !== meaning.synonyms[meaning.synonyms.length - 1]}•
+									{/if}
+								{/each}
 							</span>
 						</div>
 					{/if}
 				</div>
-			</div>
+			{/if}
+			{#each meaning.definitions as mdef}
+				<div class="mb-4 dark:text-white">
+					<div class="mb-1 text-lg">
+						{mdef.definition}
+					</div>
+					<div class="border-l-4 border-stone-200 pl-2">
+						{#if mdef.example}
+							<div class="italic">
+								{mdef.example}
+							</div>
+						{/if}
+						{#if mdef.synonyms && mdef.synonyms.length > 0}
+							<div>
+								{$t('common.words.synonyms')}:
+								<span class="italic">
+									{mdef.synonyms.join(', ')}
+								</span>
+							</div>
+						{/if}
+						{#if mdef.antonyms && mdef.antonyms.length > 0}
+							<div>
+								{$t('common.words.antonyms')}:
+								<span class="italic">
+									{mdef.antonyms.join(', ')}
+								</span>
+							</div>
+						{/if}
+					</div>
+				</div>
+			{/each}
 		{/each}
-	{/each}
-	{#if def.sourceUrls && def.sourceUrls.length > 0}
-		<div class="border-t-2 border-t-primary-200 dark:border-t-primary-800">
-			<div class="my-4 text-xl font-bold text-primary-900 dark:text-primary-300">
-				{$t('common.words.sources')}
+		{#if def.sourceUrls && def.sourceUrls.length > 0}
+			<div class="border-t-2 border-t-primary-200 dark:border-t-primary-800">
+				<div class="my-4 text-xl font-bold text-primary-900 dark:text-primary-300">
+					{$t('common.words.sources')}
+				</div>
+				<ul class="list-inside list-disc">
+					{#each def.sourceUrls as sourceUrl}
+						<li>
+							<a
+								href={sourceUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="text-blue-700 hover:underline dark:text-blue-300"
+							>
+								{sourceUrl}
+							</a>
+						</li>
+					{/each}
+				</ul>
 			</div>
-			<ul class="list-inside list-disc">
-				{#each def.sourceUrls as sourceUrl}
-					<li>
-						<a
-							href={sourceUrl}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="text-blue-700 hover:underline dark:text-blue-300"
-						>
-							{sourceUrl}
-						</a>
-					</li>
-				{/each}
-			</ul>
-		</div>
-	{/if}
+		{/if}
+	</div>
 {/each}
 
 <LoginDialog bind:open={openLoginModal} />
