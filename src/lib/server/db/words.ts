@@ -1,11 +1,36 @@
-import { desc, eq, sql } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import type { Word } from './schema';
 import * as table from './schema';
 import { db } from '.';
 import { searchDictionary } from '$lib/dictionnary';
 
+const DEFINIFY = {
+	id: -1,
+	word: 'Definify',
+	definition: [
+		{
+			word: 'definify',
+			meanings: [
+				{
+					partOfSpeech: 'noun',
+					definitions: [{ definition: 'Well... Just take a look around!' }]
+				}
+			],
+			sourceUrls: ['https://github.com/bhasherbel/definify', 'https://definify.vercel.app']
+		}
+	] as any,
+	createdAt: new Date(2024, 11, 14, 12, 59, 59),
+	updatedAt: new Date()
+};
+
 export async function getOrInsertWord(word: string): Promise<Word | null> {
+	word = word.trim().toLowerCase();
+
 	if (!word) return null;
+
+	if (word === 'definify') {
+		return DEFINIFY;
+	}
 
 	let wordDb = await db.query.words.findFirst({
 		where: eq(table.words.word, word)
@@ -32,8 +57,13 @@ export async function getOrInsertWord(word: string): Promise<Word | null> {
 
 	if (!wordDb) return null;
 
-	wordDb.definition = JSON.parse(wordDb.definition);
-	return wordDb;
+	return {
+		id: wordDb.id,
+		word: wordDb.word,
+		definition: JSON.parse(wordDb.definition),
+		createdAt: wordDb.createdAt,
+		updatedAt: wordDb.updatedAt
+	};
 }
 
 export async function getWord(word: string): Promise<Word | null> {
@@ -65,6 +95,13 @@ export async function getSuggestedWords(amount: number): Promise<SuggestedWord[]
 		.from(table.words)
 		.orderBy(sql`random()`)
 		.limit(amount);
+
+	if (Math.random() > 0.7) {
+		suggestions[getRandomInt(suggestions.length)] = {
+			...DEFINIFY,
+			definition: JSON.stringify(DEFINIFY.definition)
+		};
+	}
 
 	return suggestions.map((w) => {
 		const words = JSON.parse(w.definition);

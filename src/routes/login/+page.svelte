@@ -59,9 +59,11 @@
 				</h1>
 				{#if error || form?.invalid || form?.incorrect}
 					<div
-						class="border-2-lg rounded border border-red-600 bg-red-200 p-2 text-center text-red-800"
+						class="rounded border border-red-600 bg-red-50 p-2 text-center text-red-900 dark:bg-red-900 dark:text-red-200"
 					>
-						{#if form?.invalid}
+						{#if error}
+							{error}
+						{:else if form?.invalid}
 							{$t('login.error.invalid')}
 						{:else if form?.incorrect}
 							{$t('login.error.incorrect')}
@@ -127,7 +129,7 @@
 					</div>
 					<input
 						type="submit"
-						class="bg-action-zone dark:bg-action-zone-dark text-action-zone-text dark:text-action-zone-text-dark w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+						class="bg-action-zone text-action-zone-text dark:bg-action-zone-dark dark:text-action-zone-text-dark w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
 						value={$t('login.button')}
 					/>
 				</form>

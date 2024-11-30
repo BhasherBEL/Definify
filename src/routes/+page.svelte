@@ -113,7 +113,7 @@
 		{/if}
 	</div>
 
-	<div class="px-2">
+	<div class="z-0 px-2">
 		{#if searchResult}
 			<Word
 				isSaved={searchResult.saved}

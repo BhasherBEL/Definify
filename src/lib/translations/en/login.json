@@ -11,10 +11,11 @@
 		"link": "Register now!"
 	},
 	"error": {
-		"incorrect": "Wrong username or password",
+		"incorrect": "Wrong email or password",
+		"passkey": "Failed to login with passkey",
 		"invalid": {
 			"password": "Invalid password",
-			"username": "Invalid username"
+			"email": "Invalid email"
 		}
 	}
 }

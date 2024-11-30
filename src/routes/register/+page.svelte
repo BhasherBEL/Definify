@@ -21,7 +21,16 @@
 		} else if (step === 1) {
 			if (!email || !password || !confirmPassword) return;
 			if (password !== confirmPassword) {
-				error = get(t)('register.error.password.match');
+				error = get(t)('register.error.invalid.confirmPassword');
+				return;
+			}
+
+			if (password.length < 8) {
+				error = get(t)('register.error.invalid.passwordTooShort');
+				return;
+			}
+			if (password.length > 256) {
+				error = get(t)('register.error.invalid.passwordTooLong');
 				return;
 			}
 
@@ -39,7 +48,7 @@
 			}
 
 			if (!resp.ok) {
-				error = await resp.text();
+				error = (await resp.json()).message || 'Unknown error';
 				return;
 			}
 		}
@@ -110,14 +119,14 @@
 		<div
 			class="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0 dark:border dark:border-gray-700 dark:bg-gray-800"
 		>
-			<div class="p-6 sm:p-8">
+			<div class="relative p-6 sm:p-8">
 				<h1 class="mb-8 text-center text-xl font-bold leading-tight tracking-tight md:text-2xl">
 					{$t('register.title')}
 				</h1>
 
 				{#if error}
 					<div
-						class="border-2-lg mb-4 rounded border border-red-600 bg-red-200 p-2 text-center text-red-900"
+						class="rounded border border-red-600 bg-red-50 p-2 text-center text-red-900 dark:bg-red-900 dark:text-red-200"
 					>
 						{error}
 					</div>
@@ -131,6 +140,19 @@
 							<input type="email" name="email" id="email" class="input-text" bind:value={email} />
 						</div>
 					{:else if step == 1}
+						<button onclick={() => (step = 0)} class="absolute left-8 top-8" aria-label="Back">
+							<svg fill="currentColor" class="size-8" viewBox="0 0 24 24">
+								<g data-name="Layer 2">
+									<g data-name="arrow-back">
+										<rect width="24" height="24" transform="rotate(90 12 12)" opacity="0" />
+
+										<path
+											d="M19 11H7.14l3.63-4.36a1 1 0 1 0-1.54-1.28l-5 6a1.19 1.19 0 0 0-.09.15c0 .05 0 .08-.07.13A1 1 0 0 0 4 12a1 1 0 0 0 .07.36c0 .05 0 .08.07.13a1.19 1.19 0 0 0 .09.15l5 6A1 1 0 0 0 10 19a1 1 0 0 0 .64-.23 1 1 0 0 0 .13-1.41L7.14 13H19a1 1 0 0 0 0-2z"
+										/>
+									</g>
+								</g>
+							</svg>
+						</button>
 						<div class="flex flex-col">
 							<button
 								class="h-10 rounded border border-slate-300 p-2 text-sm opacity-80"

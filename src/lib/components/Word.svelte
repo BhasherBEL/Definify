@@ -15,6 +15,11 @@
 	let openLoginModal = $state(false);
 
 	async function addToWordlist(word: string) {
+		if (word === 'definify') {
+			toasts.success(get(t)('common.saveDefinify'));
+			return;
+		}
+
 		if (!isLoggedIn) {
 			openLoginModal = true;
 			return;
@@ -175,36 +180,38 @@
 					{/if}
 				</div>
 			{/if}
-			{#each meaning.definitions as mdef}
-				<div class="mb-4 dark:text-white">
-					<div class="mb-1 text-lg">
-						{mdef.definition}
-					</div>
-					<div class="border-l-4 border-stone-200 pl-2">
-						{#if mdef.example}
-							<div class="italic">
-								{mdef.example}
-							</div>
-						{/if}
-						{#if mdef.synonyms && mdef.synonyms.length > 0}
-							<div>
-								{$t('common.words.synonyms')}:
-								<span class="italic">
-									{mdef.synonyms.join(', ')}
-								</span>
-							</div>
-						{/if}
-						{#if mdef.antonyms && mdef.antonyms.length > 0}
-							<div>
-								{$t('common.words.antonyms')}:
-								<span class="italic">
-									{mdef.antonyms.join(', ')}
-								</span>
-							</div>
-						{/if}
-					</div>
-				</div>
-			{/each}
+			<ul>
+				{#each meaning.definitions as mdef}
+					<li class="mb-4 list-inside list-disc dark:text-white">
+						<span class="mb-1 text-lg">
+							{mdef.definition}
+						</span>
+						<div class="border-l-4 border-stone-200 pl-2">
+							{#if mdef.example}
+								<div class="italic">
+									{mdef.example}
+								</div>
+							{/if}
+							{#if mdef.synonyms && mdef.synonyms.length > 0}
+								<div>
+									{$t('common.words.synonyms')}:
+									<span class="italic">
+										{mdef.synonyms.join(', ')}
+									</span>
+								</div>
+							{/if}
+							{#if mdef.antonyms && mdef.antonyms.length > 0}
+								<div>
+									{$t('common.words.antonyms')}:
+									<span class="italic">
+										{mdef.antonyms.join(', ')}
+									</span>
+								</div>
+							{/if}
+						</div>
+					</li>
+				{/each}
+			</ul>
 		{/each}
 		{#if def.sourceUrls && def.sourceUrls.length > 0}
 			<div class="border-t-2 border-t-primary-200 dark:border-t-primary-800">
