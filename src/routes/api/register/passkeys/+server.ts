@@ -1,6 +1,5 @@
 import { error, json } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
-import { checkEmail } from '$lib/server/db/users';
 import { safeRedirectAuto } from '$lib/utils/security';
 import { validateEmail, type tempPasskey } from '@bhasher/svelte-auth';
 import auth from '$lib/server/auth';
@@ -15,7 +14,7 @@ export async function GET({ locals, url }: RequestEvent) {
 		return error(400, 'Invalid email');
 	}
 
-	if (!checkEmail(email)) {
+	if (!(await auth.checkEmail(email))) {
 		return error(400, 'Email already exists');
 	}
 
