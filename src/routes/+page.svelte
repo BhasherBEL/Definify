@@ -6,6 +6,11 @@
 
 	let { form, data }: { data: PageData; form: ActionData } = $props();
 
+	let searchBar: HTMLInputElement;
+	let searchBarFocused = $state(false);
+	let search = $state('');
+	let error: string | undefined = $state();
+
 	let searching = $state(false);
 	let searchResult: { saved: boolean; word: string; definition: string } | undefined = $state(
 		form?.searchResult
@@ -13,12 +18,37 @@
 
 	async function enhanced() {
 		searching = true;
+		searchBar.blur();
+		search = '';
 		return async ({ result }: any) => {
-			if (result.type == 'success' && result.data) searchResult = result.data;
+			if (result.type == 'success' && result.data) {
+				searchResult = result.data;
+				error = '';
+			} else if (result.type == 'failure') {
+				if (result.data.notFound) error = $t('home.error.notFound', { word: result.data.word });
+				else if (result.data.invalid) error = $t('home.error.invalid');
+				else error = $t('home.error.generic');
+				searchResult = undefined;
+			}
 			searching = false;
 		};
 	}
 </script>
+
+<svelte:window
+	onkeydowncapture={(e) => {
+		if (e.key === '/' && searchBar) {
+			e.preventDefault();
+			searchBar.focus();
+		} else if (
+			searchBar &&
+			searchBarFocused &&
+			(e.key === 'Escape' || (e.key === 'Enter' && search === ''))
+		) {
+			searchBar.blur();
+		}
+	}}
+/>
 
 <div class="pb-8 md:mx-auto md:max-w-5xl">
 	<form
@@ -27,7 +57,7 @@
 		method="POST"
 		use:enhance={enhanced}
 	>
-		<div class="relative">
+		<div class="relative z-20">
 			<div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
 				<svg
 					class="h-4 w-4 opacity-60"
@@ -45,12 +75,23 @@
 					/>
 				</svg>
 			</div>
+			<div class="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-3">
+				<kbd
+					class="rounded-lg border border-gray-200 bg-gray-100 px-2 py-1.5 text-xs font-semibold text-gray-800 dark:border-gray-500 dark:bg-gray-600 dark:text-gray-100"
+				>
+					{searchBarFocused ? 'Enter' : '/'}
+				</kbd>
+			</div>
 			<input
+				bind:this={searchBar}
+				onfocusin={() => (searchBarFocused = true)}
+				onfocusout={() => (searchBarFocused = false)}
 				type="search"
 				id="search"
 				name="search"
-				value={form?.word || ''}
-				class="input-text !py-4 !ps-10"
+				bind:value={search}
+				class="input-text !py-4 !pe-20 !ps-10"
+				maxlength="50"
 				placeholder={$t('home.search.placeholder')}
 				autocomplete="off"
 				required
@@ -59,25 +100,21 @@
 	</form>
 
 	<div class="mx-auto my-4 max-w-5xl px-2">
-		{#if form?.notFound && form?.word}
-			<div class="rounded border border-red-600 bg-red-50 p-2 text-center text-red-900">
-				{$t('home.error.notFound', { word: form.word })}
-			</div>
-		{:else if form?.invalid}
-			<div
-				class="mx-auto max-w-5xl rounded border border-red-600 bg-red-50 p-2 text-center text-red-900"
-			>
-				{$t('home.error.invalid')}
-			</div>
-		{:else if searching}
+		{#if searching}
 			<div class="text-center">
 				<div class="loading-bars"></div>
+			</div>
+		{:else if error}
+			<div
+				class="rounded border border-red-600 bg-red-50 p-2 text-center text-red-900 dark:bg-red-900 dark:text-red-200"
+			>
+				{error}
 			</div>
 		{/if}
 	</div>
 
 	<div class="px-2">
-		{#if searchResult}
+		{#if searchResult && !form?.notFound && !form?.invalid}
 			<Word
 				isSaved={searchResult.saved}
 				word={searchResult.word}
@@ -131,3 +168,8 @@
 		</form>
 	</div>
 </div>
+
+<div
+	class="absolute bottom-0 left-0 right-0 top-0 z-10 bg-white bg-opacity-40 backdrop-blur dark:bg-black dark:bg-opacity-40"
+	class:hidden={!searchBarFocused}
+></div>

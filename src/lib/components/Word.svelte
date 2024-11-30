@@ -73,7 +73,7 @@
 
 {#each definitions as def}
 	<div>
-		<div class="bg-bg dark:bg-bg-dark sticky top-0 z-20 flex h-24 flex-row justify-between py-4">
+		<div class="bg-bg dark:bg-bg-dark flex h-24 flex-row justify-between py-4">
 			<div class="font-serif text-6xl font-bold">
 				{def.word}
 			</div>
@@ -140,10 +140,10 @@
 				{/if}
 			{/each}
 		</div>
-		<div class="sticky top-24 z-30 border-b-4 border-b-primary-600"></div>
+		<div class="border-b-4 border-b-primary-600"></div>
 		{#each def.meanings as meaning}
 			<div
-				class="bg-bg dark:bg-bg-dark sticky top-[100px] z-10 my-4 border-b-2 border-b-secondary-200 text-xl text-primary-900 dark:border-b-secondary-900 dark:text-primary-300"
+				class="bg-bg dark:bg-bg-dark my-4 border-b-2 border-b-secondary-200 text-xl text-primary-900 dark:border-b-secondary-900 dark:text-primary-300"
 			>
 				<span class="italic">{meaning.partOfSpeech}</span>
 			</div>
