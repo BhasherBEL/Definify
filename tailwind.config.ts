@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import colors from 'tailwindcss/colors';
 
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
@@ -7,30 +8,35 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				primary: {
-					'50': '#faf5ff',
-					'100': '#f3e8ff',
-					'200': '#e9d5ff',
-					'300': '#d8b4fe',
-					'400': '#c084fc',
-					'500': '#a855f7',
-					'600': '#9333ea',
-					'700': '#7e22ce',
-					'800': '#6b21a8',
-					'900': '#581c87',
-					'950': '#1d0432'
+				primary: colors.purple,
+				secondary: colors.indigo,
+				bg: {
+					dark: '#2A303C',
+					DEFAULT: colors.purple[50]
 				},
-				secondary: {
-					'50': '#f5f7fa',
-					'100': '#e4ebf0',
-					'200': '#cbd8e3',
-					'300': '#9eb8cd',
-					'400': '#6f8db3',
-					'500': '#3f639d',
-					'600': '#2a4365',
-					'700': '#1a365d',
-					'800': '#153e75',
-					'900': '#1a365d'
+				text: {
+					dark: colors.white,
+					DEFAULT: colors.black
+					//dark: colors.red[300],
+					//DEFAULT: colors.red[700]
+				},
+				action: {
+					text: {
+						dark: colors.purple[400],
+						DEFAULT: colors.purple[700]
+					},
+					zone: {
+						dark: colors.purple[600],
+						DEFAULT: colors.purple[600],
+						text: {
+							dark: colors.white,
+							DEFAULT: colors.white
+						}
+					}
+				},
+				zone: {
+					dark: colors.gray[700],
+					DEFAULT: colors.white
 				}
 			}
 		}

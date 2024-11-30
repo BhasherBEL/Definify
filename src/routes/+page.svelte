@@ -24,7 +24,7 @@
 		<div class="relative">
 			<div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
 				<svg
-					class="h-4 w-4 text-gray-500 dark:text-gray-400"
+					class="h-4 w-4 opacity-60"
 					aria-hidden="true"
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -44,7 +44,7 @@
 				id="search"
 				name="search"
 				value={form?.word || ''}
-				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-xl placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-500"
+				class="input-text !py-4 !ps-10"
 				placeholder={$t('home.search.placeholder')}
 				autocomplete="off"
 				required
@@ -73,16 +73,16 @@
 	<div class="py-2">{$t('home.suggestions')}</div>
 
 	<div
-		class="no-scrollbar -mx-4 flex flex-1 snap-x snap-mandatory space-x-2 overflow-x-scroll px-4 dark:text-white md:grid md:grid-cols-4"
+		class="no-scrollbar -mx-4 flex flex-1 snap-x snap-mandatory space-x-2 overflow-x-scroll px-4 md:grid md:grid-cols-4"
 	>
 		{#each data.suggestions as suggestion (suggestion.id)}
 			<a
-				class="h-32 flex-[0_0_90vw] snap-center overflow-y-hidden rounded-lg border bg-white p-2 dark:border-neutral-950 dark:bg-gray-700 dark:text-white md:flex-[0_0_32rem]"
+				class="h-32 flex-[0_0_90vw] snap-center overflow-y-hidden rounded-lg border bg-white p-2 md:flex-[0_0_32rem] dark:border-neutral-950 dark:bg-gray-700"
 				href="/words/{suggestion.word}"
 			>
 				<div class="mb-2">
 					<span class="font-bold capitalize">{suggestion.word}</span>
-					<span class="float-right mr-2 italic text-gray-500">{suggestion.partOfSpeech}</span>
+					<span class="float-right mr-2 italic opacity-50">{suggestion.partOfSpeech}</span>
 				</div>
 				<div class="">{suggestion.definition}</div>
 			</a>

@@ -16,15 +16,15 @@
 </script>
 
 <div
-	class="relative z-10 grid grid-cols-3 justify-around border-t bg-white p-1 dark:border-neutral-950 dark:bg-gray-700 dark:fill-white dark:text-white md:hidden"
+	class="fill-text dark:fill-text-dark relative z-10 grid grid-cols-3 justify-around border-t bg-white p-1 md:hidden dark:border-neutral-950 dark:bg-gray-700"
 >
 	<a
 		href="/words"
 		class="flex flex-col items-center justify-center text-center"
 		class:text-primary-800={$currentPage === 'words'}
 		class:fill-primary-800={$currentPage === 'words'}
-		class:dark:text-primary-300={$currentPage === 'words'}
-		class:dark:fill-primary-300={$currentPage === 'words'}
+		class:dark:text-primary-200={$currentPage === 'words'}
+		class:dark:fill-primary-200={$currentPage === 'words'}
 	>
 		<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
 			<path
@@ -38,8 +38,8 @@
 		class="flex flex-col items-center justify-center text-center"
 		class:text-primary-800={$currentPage === 'home'}
 		class:fill-primary-800={$currentPage === 'home'}
-		class:dark:text-primary-300={$currentPage === 'home'}
-		class:dark:fill-primary-300={$currentPage === 'home'}
+		class:dark:text-primary-200={$currentPage === 'home'}
+		class:dark:fill-primary-200={$currentPage === 'home'}
 	>
 		<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
 			<path
@@ -53,8 +53,8 @@
 		class="flex flex-col items-center justify-center text-center"
 		class:text-primary-800={$currentPage === 'account'}
 		class:fill-primary-800={$currentPage === 'account'}
-		class:dark:text-primary-300={$currentPage === 'account'}
-		class:dark:fill-primary-300={$currentPage === 'account'}
+		class:dark:text-primary-200={$currentPage === 'account'}
+		class:dark:fill-primary-200={$currentPage === 'account'}
 	>
 		<svg width="50" height="50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 			<path

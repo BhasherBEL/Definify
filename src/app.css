@@ -42,3 +42,7 @@
 		scrollbar-width: none; /* Firefox */
 	}
 }
+
+.input-text {
+	@apply dark:placeholder-text-dark placeholder-text block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 placeholder-opacity-60 focus:border-primary-600 dark:border-gray-600 dark:bg-gray-700;
+}

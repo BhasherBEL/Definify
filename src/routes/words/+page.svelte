@@ -43,13 +43,13 @@
 	{#each words as word}
 		<a
 			href={`/words/${word.word}`}
-			class="m-2 flex items-center rounded-lg border p-4 py-2 shadow-[0_0_6px_0_rgba(0,14,156,.2)] hover:shadow-inner dark:border-gray-500 dark:bg-gray-700 md:m-0 md:w-full md:items-start md:pb-0"
+			class="dark:bg-zone-dark bg-zone m-2 flex items-center rounded-lg border p-4 md:m-0 md:w-full md:items-start md:pb-0 dark:border-gray-500"
 		>
 			<div class="flex flex-grow md:h-32 md:flex-col">
-				<div class="mr-5 flex flex-grow bg-white dark:bg-transparent md:w-full md:flex-none">
+				<div class="mr-5 flex flex-grow bg-white md:w-full md:flex-none dark:bg-transparent">
 					<div class="flex-grow text-xl capitalize dark:text-white">{word.word}</div>
 					<div class="flex items-center justify-end gap-5">
-						<span class="text-sm lowercase italic text-gray-500">
+						<span class="text-sm lowercase italic opacity-50">
 							{word.definitions.length}
 							{$t('common.word.definitions', { n: word.definitions.length })}
 						</span>
@@ -63,7 +63,7 @@
 							>
 								<audio bind:this={refs[word.audio]} src={word.audio}></audio>
 								<svg
-									class="size-5 fill-current dark:fill-white"
+									class="fill-text dark:fill-text-dark size-5"
 									viewBox="0 0 25 22"
 									fill="none"
 									xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +75,7 @@
 							</button>
 						{:else}
 							<svg
-								class="size-5 fill-gray-500"
+								class="fill-text dark:fill-text-dark size-5 opacity-60"
 								viewBox="0 0 25 19"
 								fill="none"
 								xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +88,7 @@
 					</div>
 				</div>
 				<div
-					class="relative hidden flex-grow divide-black overflow-y-hidden text-sm after:absolute after:bottom-0 after:h-16 after:w-full after:bg-gradient-to-t after:from-white after:to-transparent dark:after:from-gray-700 md:block"
+					class="relative hidden flex-grow divide-black overflow-y-hidden text-sm after:absolute after:bottom-0 after:h-16 after:w-full after:bg-gradient-to-t after:from-white after:to-transparent md:block dark:after:from-gray-700"
 				>
 					<div class="divide-y divide-dashed divide-black md:grid">
 						{#each word.definitions as definition}

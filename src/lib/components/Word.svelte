@@ -74,10 +74,10 @@
 {#each definitions as def}
 	<div class="border-b-4 border-b-primary-600">
 		<div class="flex flex-row justify-between py-4">
-			<div class="font-serif text-6xl font-bold dark:text-white">
+			<div class="font-serif text-6xl font-bold">
 				{word}
 			</div>
-			<div class="flex items-center text-gray-600">
+			<div class="flex items-center">
 				<button
 					aria-label="save"
 					onclick={() => {
@@ -91,8 +91,8 @@
 						stroke-width="1.5"
 						stroke="currentColor"
 						class="size-10 hover:cursor-pointer"
-						class:fill-black={isSaved}
-						class:dark:fill-white={isSaved}
+						class:fill-text={isSaved}
+						class:dark:fill-text-dark={isSaved}
 					>
 						<path
 							stroke-linecap="round"
@@ -103,7 +103,7 @@
 				</button>
 			</div>
 		</div>
-		<div class="flex gap-4 space-y-4 space-y-reverse text-xl dark:text-white">
+		<div class="flex gap-4 space-y-4 space-y-reverse text-xl">
 			{#each def.phonetics as phonetic}
 				{#if phonetic.text}
 					<span>{phonetic.text}</span>
@@ -139,9 +139,7 @@
 			<span class="italic">{meaning.partOfSpeech}</span>
 		</div>
 		{#if (meaning.antonyms && meaning.antonyms.length > 0) || (meaning.synonyms && meaning.synonyms.length > 0)}
-			<div
-				class="mb-4 w-fit rounded-lg border p-2 text-gray-700 dark:border-gray-500 dark:text-gray-300"
-			>
+			<div class="mb-4 w-fit rounded-lg border p-2 opacity-70 dark:border-gray-500">
 				{#if meaning.antonyms && meaning.antonyms.length > 0}
 					<div class="text-lg">
 						{$t('common.words.antonyms')}:

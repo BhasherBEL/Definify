@@ -48,20 +48,18 @@
 	}
 </script>
 
-<section class="bg-gray-50 dark:bg-gray-900">
+<section>
 	<div class="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen">
 		<div
-			class="w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md md:mt-0 xl:p-0"
+			class="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0 dark:border dark:border-gray-700 dark:bg-gray-800"
 		>
 			<div class="space-y-4 p-6 sm:p-8 md:space-y-6">
-				<h1
-					class="text-center text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl"
-				>
+				<h1 class="text-center text-xl font-bold leading-tight tracking-tight md:text-2xl">
 					{$t('login.title')}
 				</h1>
 				{#if error || form?.invalid || form?.incorrect}
 					<div
-						class="border-2-lg rounded border border-red-600 bg-red-200 p-2 text-center text-red-900"
+						class="border-2-lg rounded border border-red-600 bg-red-200 p-2 text-center text-red-800"
 					>
 						{#if form?.invalid}
 							{$t('login.error.invalid')}
@@ -72,7 +70,7 @@
 				{/if}
 				<div class="flex flex-col">
 					<button
-						class="h-10 rounded border border-slate-300 p-2 text-sm text-gray-600"
+						class="h-10 rounded border border-slate-300 p-2 text-sm opacity-80"
 						onclick={loginPasskey}
 					>
 						{$t('login.passkey')}
@@ -85,29 +83,20 @@
 				</div>
 				<form class="space-y-4 md:space-y-6" method="POST">
 					<div>
-						<label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+						<label for="email" class="mb-2 block text-sm font-medium opacity-90">
 							{$t('login.email')}
 						</label>
-						<input
-							type="text"
-							name="email"
-							id="email"
-							class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-							required={true}
-						/>
+						<input type="text" name="email" id="email" class="input-text" required={true} />
 					</div>
 					<div>
-						<label
-							for="password"
-							class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-						>
+						<label for="password" class="mb-2 block text-sm font-medium opacity-90">
 							{$t('login.password')}
 						</label>
 						<input
 							type="password"
 							name="password"
 							id="password"
-							class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+							class="input-text"
 							required={true}
 						/>
 					</div>
@@ -124,21 +113,21 @@
 								/>
 							</div>
 							<div class="ml-3 text-sm">
-								<label for="remember" class="text-gray-500 dark:text-gray-300">
+								<label for="remember">
 									{$t('login.remember')}
 								</label>
 							</div>
 						</div>
 						<a
 							href="#forgot"
-							class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+							class="text-action-text dark:text-action-text-dark text-sm font-medium hover:underline"
 						>
 							{$t('login.forgotPassword')}
 						</a>
 					</div>
 					<input
 						type="submit"
-						class="w-full rounded-lg bg-primary-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+						class="bg-action-zone dark:bg-action-zone-dark text-action-zone-text dark:text-action-zone-text-dark w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
 						value={$t('login.button')}
 					/>
 				</form>
@@ -146,7 +135,7 @@
 					{$t('login.register.pre')}
 					<a
 						href="/register"
-						class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+						class="text-action-text dark:text-action-text-dark font-medium hover:underline"
 					>
 						{$t('login.register.link')}
 					</a>
