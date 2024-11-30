@@ -8,7 +8,7 @@ export const actions: Actions = {
 			path: '/'
 		});
 
-		return redirect(303, '/account');
+		//return redirect(303, '/account');
 	},
 	'theme-auto': async ({ cookies }) => {
 		cookies.delete('theme', {
@@ -17,7 +17,7 @@ export const actions: Actions = {
 			path: '/'
 		});
 
-		return redirect(303, '/account');
+		//return redirect(303, '/account');
 	},
 	'theme-dark': async ({ cookies }) => {
 		cookies.set('theme', 'dark', {
@@ -26,6 +26,6 @@ export const actions: Actions = {
 			path: '/'
 		});
 
-		return redirect(303, '/account');
+		//return redirect(303, '/account');
 	}
 } satisfies Actions;

@@ -124,7 +124,7 @@
 		{/each}
 		<form action="?/suggestions" method="POST" use:enhance>
 			<button
-				class="border-zone size-full animate-pulse rounded-xl border-2 border-dashed hover:bg-gray-500 hover:bg-opacity-10 dark:border-neutral-600"
+				class="size-full animate-pulse rounded-xl border-2 border-dashed border-neutral-300 hover:bg-gray-500 hover:bg-opacity-10 dark:border-neutral-600"
 			>
 				{$t('home.newSuggestions')}
 			</button>
