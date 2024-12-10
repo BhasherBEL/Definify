@@ -20,6 +20,7 @@
 		searching = true;
 		searchBar.blur();
 		search = '';
+		searchBarFocused = false;
 		return async ({ result }: any) => {
 			if (result.type == 'success' && result.data) {
 				searchResult = result.data;
@@ -32,6 +33,18 @@
 			}
 			searching = false;
 		};
+	}
+
+	function onfocusout(e: FocusEvent & { currentTarget: EventTarget & HTMLInputElement }) {
+		if (
+			e.relatedTarget instanceof HTMLButtonElement &&
+			e.relatedTarget.type === 'submit' &&
+			e.currentTarget.value !== ''
+		) {
+			e.preventDefault();
+			return;
+		}
+		searchBarFocused = false;
 	}
 </script>
 
@@ -75,17 +88,22 @@
 					/>
 				</svg>
 			</div>
-			<div class="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-3">
-				<kbd
-					class="rounded-lg border border-gray-200 bg-gray-100 px-2 py-1.5 text-xs font-semibold text-gray-800 dark:border-gray-500 dark:bg-gray-600 dark:text-gray-100"
-				>
-					{searchBarFocused ? 'Enter' : '/'}
-				</kbd>
+			<div
+				class="absolute inset-y-0 end-0 flex items-center pe-3"
+				class:pointer-events-none={!searchBarFocused}
+			>
+				<button type="submit">
+					<kbd
+						class="rounded-lg border border-gray-200 bg-gray-100 px-2 py-1.5 text-xs font-semibold text-gray-800 dark:border-gray-500 dark:bg-gray-600 dark:text-gray-100"
+					>
+						{searchBarFocused ? 'Enter' : '/'}
+					</kbd>
+				</button>
 			</div>
 			<input
 				bind:this={searchBar}
 				onfocusin={() => (searchBarFocused = true)}
-				onfocusout={() => (searchBarFocused = false)}
+				{onfocusout}
 				type="search"
 				id="search"
 				name="search"
@@ -127,7 +145,7 @@
 	<div class="my-4 flex p-2 italic">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			class="animate-spin-frac h-5 w-5"
+			class="h-5 w-5 animate-spin-frac"
 			fill="currentColor"
 			viewBox="0 0 448 512"
 			><path
@@ -147,7 +165,7 @@
 				action="?/search"
 				method="POST"
 				use:enhance={enhanced}
-				class="bg-zone dark:bg-zone-dark col-span-2 h-32 flex-[0_0_90vw] snap-center overflow-y-hidden rounded-xl border md:flex-[0_0_32rem] dark:border-neutral-600"
+				class="col-span-2 h-32 flex-[0_0_90vw] snap-center overflow-y-hidden rounded-xl border bg-zone md:flex-[0_0_32rem] dark:border-neutral-600 dark:bg-zone-dark"
 			>
 				<input type="search" id="search" name="search" value={suggestion.word} class="hidden" />
 				<button class="flex size-full flex-col p-2 text-left align-top">
