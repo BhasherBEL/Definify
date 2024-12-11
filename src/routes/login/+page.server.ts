@@ -1,6 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { safeRedirectAuto } from '$lib/utils/security';
-import { fail, type Actions } from '@sveltejs/kit';
+import { type Actions } from '@sveltejs/kit';
+import { defaultLoginAction } from '$lib/utils/actions';
 
 export const load: PageServerLoad = async ({ locals, url }) => {
 	if (locals.user) {
@@ -11,32 +12,5 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ locals, request, url, fetch }) => {
-		if (locals.user) {
-			return safeRedirectAuto(url);
-		}
-
-		const formData = await request.formData();
-		const email = formData.get('email');
-		const password = formData.get('password');
-		if (!email || !password) {
-			return fail(400, { invalid: true });
-		}
-
-		const resp = await fetch('/api/login/passwords', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ email, password })
-		});
-
-		console.log(resp);
-
-		if (!resp.ok) {
-			return fail(401, { incorrect: true });
-		}
-
-		safeRedirectAuto(url);
-	}
+	default: defaultLoginAction
 } satisfies Actions;

@@ -13,13 +13,14 @@
 		"link": "Sign in!"
 	},
 	"passkey": "Register with a passkey",
+	"passwordMismatch": "Passwords do not match",
 	"error": {
 		"invalid": {
 			"password": "Password must be at least 8 characters",
 			"username": "Username must be between 3 and 31 characters and can only contain letters, numbers, and underscores",
 			"email": "Invalid email address",
 			"confirmPassword": "Passwords do not match",
-			"passwordTooShort": "Password must be at least 8 characters",
+			"passwordTooWeak": "Your password is too weak. Please use longer or more complex passwords.",
 			"passwordTooLong": "Password must be at most 256 characters"
 		},
 		"passkey": {

@@ -17,3 +17,23 @@ export function safeRedirect(path: string | null | undefined, origin: string) {
 export function safeRedirectAuto(url: URL) {
 	return safeRedirect(url.searchParams.get('redirect'), url.origin);
 }
+
+export function passwordEntropy(text: string | undefined): number {
+	if (!text) return 0;
+
+	let charset_size = 0;
+	if (text.match(/[a-z]/)) {
+		charset_size += 26;
+	}
+	if (text.match(/[A-Z]/)) {
+		charset_size += 26;
+	}
+	if (text.match(/[0-9]/)) {
+		charset_size += 10;
+	}
+	if (text.match(/[^a-zA-Z0-9]/)) {
+		charset_size += 33;
+	}
+
+	return Math.log2(charset_size ** text.length);
+}

@@ -25,5 +25,12 @@
 		"definitions": "{n, plural, =1 {Definition} other {Definitions}}",
 		"or": "or"
 	},
-	"saveDefinify": "Hey! Definify will always be in your heart ♥"
+	"saveDefinify": "Hey! Definify will always be in your heart ♥",
+	"passwordStrength": {
+		"tooWeak": "Too weak",
+		"weak": "Weak",
+		"ok": "Ok",
+		"good": "Good",
+		"strong": "Strong"
+	}
 }
