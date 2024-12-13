@@ -1,11 +1,9 @@
-import { error, json } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 import auth from '$lib/server/auth';
-import { db } from '$lib/server/db';
-import * as tables from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { safeRedirectAuto } from '@bhasher/svelte-auth';
 
-export async function POST({ locals, request, cookies }: RequestEvent) {
+export async function POST({ locals, request, cookies, url }: RequestEvent) {
 	if (locals.user) {
 		return error(403, 'Forbidden');
 	}
@@ -32,5 +30,5 @@ export async function POST({ locals, request, cookies }: RequestEvent) {
 		return error(400, e);
 	}
 
-	return json({ id: userId }, { status: 201 });
+	return safeRedirectAuto(url);
 }
