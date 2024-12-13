@@ -1,6 +1,7 @@
-import { defaultLogoutAction } from '$lib/utils/actions';
+import { defaultLogoutAction } from '@bhasher/svelte-auth';
 import type { Actions } from './$types';
+import auth from '$lib/server/auth';
 
 export const actions: Actions = {
-	default: defaultLogoutAction
+	default: defaultLogoutAction(auth)
 };

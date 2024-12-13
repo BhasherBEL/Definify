@@ -1,8 +1,8 @@
 <script lang="ts">
-	import LoginDialog from '$lib/components/LoginDialog.svelte';
 	import toasts from '$lib/utils/toasts';
 	import { get } from 'svelte/store';
 	import { t } from '$lib/translations';
+	import { LoginDialog } from '@bhasher/svelte-auth';
 
 	let {
 		word,
@@ -78,7 +78,7 @@
 
 {#each definitions as def}
 	<div>
-		<div class="bg-bg dark:bg-bg-dark flex h-24 flex-row justify-between py-4">
+		<div class="flex h-24 flex-row justify-between bg-bg py-4 dark:bg-bg-dark">
 			<div class="font-serif text-6xl font-bold">
 				{def.word}
 			</div>
@@ -148,7 +148,7 @@
 		<div class="border-b-4 border-b-primary-600"></div>
 		{#each def.meanings as meaning}
 			<div
-				class="bg-bg dark:bg-bg-dark my-4 border-b-2 border-b-secondary-200 text-xl text-primary-900 dark:border-b-secondary-900 dark:text-primary-300"
+				class="my-4 border-b-2 border-b-secondary-200 bg-bg text-xl text-primary-900 dark:border-b-secondary-900 dark:bg-bg-dark dark:text-primary-300"
 			>
 				<span class="italic">{meaning.partOfSpeech}</span>
 			</div>
@@ -237,4 +237,4 @@
 	</div>
 {/each}
 
-<LoginDialog bind:open={openLoginModal} />
+<LoginDialog bind:open={openLoginModal} {t} />

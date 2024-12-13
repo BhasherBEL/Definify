@@ -1,7 +1,6 @@
 import { error, json } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
-import { safeRedirectAuto } from '$lib/utils/security';
-import { validateEmail, type tempPasskey } from '@bhasher/svelte-auth';
+import { validateEmail, type tempPasskey, safeRedirectAuto } from '@bhasher/svelte-auth';
 import auth from '$lib/server/auth';
 
 export async function GET({ locals, url }: RequestEvent) {

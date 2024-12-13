@@ -1,6 +1,6 @@
 import { error, json, type RequestEvent } from '@sveltejs/kit';
 import auth from '$lib/server/auth';
-import { safeRedirectAuto } from '$lib/utils/security';
+import { safeRedirectAuto } from '@bhasher/svelte-auth';
 
 export async function GET({ locals, url }: RequestEvent) {
 	if (locals.user) {

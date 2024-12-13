@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
 
 export default {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+	content: ['./src/**/*.{html,js,svelte,ts}', './node_modules/@bhasher/**/*.{html,js,svelte,ts}'],
 
 	darkMode: 'selector',
 	theme: {
