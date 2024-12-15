@@ -21,6 +21,7 @@
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"@types/eslint": "^9.6.0",
+		"@vite-pwa/sveltekit": "^0.6.6",
 		"@zerodevx/svelte-toast": "^0.9.6",
 		"autoprefixer": "^10.4.20",
 		"drizzle-kit": "^0.22.8",
@@ -39,8 +40,8 @@
 		"vite": "^5.0.3"
 	},
 	"dependencies": {
-		"@bhasher/svelte-auth": "^1.1.4-1",
 		"@bhasher/svelte-analytics": "^0.0.1",
+		"@bhasher/svelte-auth": "^1.1.4-1",
 		"@libsql/client": "^0.9.0",
 		"@node-rs/argon2": "^2.0.2",
 		"@oslojs/crypto": "^1.0.1",
