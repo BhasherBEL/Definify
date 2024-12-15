@@ -34,7 +34,7 @@
 </svelte:head>
 
 <div
-	class="bg-bg dark:bg-bg-dark text-text dark:text-text-dark flex h-dvh flex-col overflow-hidden"
+	class="flex h-dvh flex-col overflow-hidden bg-bg text-text dark:bg-bg-dark dark:text-text-dark"
 	class:dark={theme.dark}
 >
 	<div class="flex flex-grow flex-col overflow-y-scroll">

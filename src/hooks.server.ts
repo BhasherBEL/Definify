@@ -1,7 +1,10 @@
+import analytics from '$lib/server/analytics';
 import auth from '$lib/server/auth';
 import type { Handle } from '@sveltejs/kit';
 
 const handleAuth: Handle = async ({ event, resolve }) => {
+	analytics.trackPlausiblePageview(event).catch(console.error);
+
 	const sessionToken = event.cookies.get(auth.sessionCookieName);
 
 	event.locals.theme =
