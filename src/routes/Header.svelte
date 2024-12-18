@@ -15,6 +15,11 @@
 				href="/"
 				class="flex items-center self-center whitespace-nowrap font-['OleoScript'] text-2xl font-semibold"
 			>
+				<img
+					src="/favicon.svg"
+					alt=""
+					class="mr-2 size-8 border-red-500 fill-red-500 stroke-red-500"
+				/>
 				{$t('common.name')}
 			</a>
 			<div class="order-2 hidden items-center md:flex">
